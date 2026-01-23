@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Title">
+      <UniqueIdentifier>{08b7b3e6-0624-4243-86c0-25bd90b324c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play">
+      <UniqueIdentifier>{c9b64504-cf32-4977-8d3e-e94ff996c942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Result">
+      <UniqueIdentifier>{0529534f-8391-42dd-b3d2-316acab84b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLibrary">
+      <UniqueIdentifier>{65112aa8-3e01-4e7b-8d4e-a7ebaf0da054}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\Play\PlayScene.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Title\TitleScene.cpp">
+      <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Result\ResultScene.cpp">
+      <Filter>Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Input.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\Title\TitleScene.h">
+      <Filter>Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Play\PlayScene.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Color.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Result\ResultScene.h">
+      <Filter>Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Input.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Screen.h" />
+  </ItemGroup>
+</Project>
