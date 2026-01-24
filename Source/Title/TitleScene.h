@@ -5,7 +5,7 @@ class TitleScene : public Scene
 {
 public:
 	TitleScene();
-	~TitleScene();
+	~TitleScene() override;
 	void Update() override;
 	void Draw() override;
 };

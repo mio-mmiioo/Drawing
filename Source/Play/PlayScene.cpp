@@ -1,17 +1,21 @@
 #include "PlayScene.h"
 #include "../MyLibrary/Color.h"
 #include "../MyLibrary/Input.h"
+#include "Player.h"
 
 PlayScene::PlayScene()
 {
+	Player::Init();
 }
 
 PlayScene::~PlayScene()
 {
+	Player::Release();
 }
 
 void PlayScene::Update()
 {
+	Player::Update();
 	if (Input::IsKeyDown("nextScene"))
 	{
 		SceneMaster::ChangeScene("RESULT");
@@ -20,5 +24,6 @@ void PlayScene::Update()
 
 void PlayScene::Draw()
 {
+	Player::Draw();
 	DrawFormatString(10, 10, Color::TEXT, "PlayScene");
 }

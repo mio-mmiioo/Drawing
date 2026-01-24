@@ -5,7 +5,7 @@ class PlayScene : public Scene
 {
 public:
 	PlayScene();
-	~PlayScene();
+	~PlayScene() override;
 	void Update() override;
 	void Draw() override;
 };

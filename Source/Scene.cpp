@@ -20,6 +20,7 @@ void SceneMaster::CreateFirst()
 
 void SceneMaster::ChangeScene(const std::string& name)
 {
+	Scene* prev = current;
 	if (name == "TITLE")
 	{
 		current = new TitleScene();
@@ -36,6 +37,7 @@ void SceneMaster::ChangeScene(const std::string& name)
 	{
 		// ƒV[ƒ“‚ªØ‚è‘Ö‚í‚ç‚È‚¢
 	}
+	prev->~Scene();
 }
 
 void SceneMaster::Init()
@@ -44,7 +46,7 @@ void SceneMaster::Init()
 
 void SceneMaster::Update()
 {
-	ImGuiInput();
+	//ImGuiInput();
 	current->Update();
 }
 

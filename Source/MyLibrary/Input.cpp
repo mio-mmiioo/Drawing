@@ -32,6 +32,10 @@ namespace Input
 void Input::InitActionMap()
 {
     // 入力処理の内容
+    
+    inputActionMap["drawing"] = { {InputType::mouse, MOUSE_INPUT_LEFT} }; // 線をかく
+
+    // 開発時のみの可能性あり
     inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_SPACE} }; // 次のシーンに遷移する
     inputActionMap["exit"] = { {InputType::keyboard, KEY_INPUT_ESCAPE} }; // プログラムを終了する
 }

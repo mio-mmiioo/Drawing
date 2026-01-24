@@ -5,7 +5,7 @@ class ResultScene : public Scene
 {
 public:
 	ResultScene();
-	~ResultScene();
+	~ResultScene() override;
 	void Update() override;
 	void Draw() override;
 };
