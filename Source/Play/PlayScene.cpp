@@ -25,5 +25,4 @@ void PlayScene::Update()
 void PlayScene::Draw()
 {
 	Player::Draw();
-	DrawFormatString(10, 10, Color::TEXT, "PlayScene");
 }
