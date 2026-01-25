@@ -147,6 +147,7 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MyLibrary\Input.cpp" />
+    <ClCompile Include="Source\Play\Pen.cpp" />
     <ClCompile Include="Source\Play\Player.cpp" />
     <ClCompile Include="Source\Play\PlayScene.cpp" />
     <ClCompile Include="Source\Result\ResultScene.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\MyLibrary\Color.h" />
     <ClInclude Include="Source\MyLibrary\Input.h" />
+    <ClInclude Include="Source\Play\Pen.h" />
     <ClInclude Include="Source\Play\Player.h" />
     <ClInclude Include="Source\Play\PlayScene.h" />
     <ClInclude Include="Source\Result\ResultScene.h" />

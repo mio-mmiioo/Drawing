@@ -16,4 +16,8 @@ namespace Color
 	const int ERASER = BLACK;
 	const int AREA = GREEN;
 	const int CHANGE_CIRCLE = WHITE;
+
+	// Penで使用
+	const int PEN_CIRCLE = WHITE;
+	const int WIDTH_LINE = WHITE; // 線の太さのバー
 }

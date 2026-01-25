@@ -36,7 +36,10 @@ void Input::InitActionMap()
     inputActionMap["drawing"] = { {InputType::mouse, MOUSE_INPUT_LEFT} }; // 線をかく
     inputActionMap["back"] = { {InputType::keyboard, KEY_INPUT_Z} }; // 1つ戻る (お絵描き中)
     inputActionMap["changeColor"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} }; // ペンの色を変更する
+    inputActionMap["changeWidth"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} };
     inputActionMap["eraser"] = { {InputType::keyboard, KEY_INPUT_E}, { InputType::mouse, MOUSE_INPUT_RIGHT } }; // 消しゴム
+    
+    
     // 開発時のみの可能性あり
     inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_SPACE} }; // 次のシーンに遷移する
     inputActionMap["exit"] = { {InputType::keyboard, KEY_INPUT_ESCAPE} }; // プログラムを終了する
