@@ -14,7 +14,7 @@ namespace Color
 	// Playerで使用
 	const int LINE = RED;
 	const int ERASER = BLACK;
-	const int AREA = GREEN;
+	const int AREA = GetColor(100, 200, 100);
 	const int CHANGE_CIRCLE = WHITE;
 
 	// Penで使用

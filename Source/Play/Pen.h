@@ -1,16 +1,11 @@
 #pragma once
+#include "Area.h"
 
 namespace Pen
 {
-	struct point
-	{
-		int x;
-		int y;
-	};
-
 	void Init();
 
-	void UpdateChangePenWidth(point mouse, float lineWidth);
+	void UpdateChangePenWidth(point mouse, float* lineWidth, bool isClick, bool isDrag);
 
 	void DrawChangePenWidth(float lineWidth);
 }

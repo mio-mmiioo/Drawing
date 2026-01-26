@@ -4,23 +4,11 @@
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
 #include "Pen.h"
+#include "Area.h"
 #include <vector>
 
 namespace Player
 {
-	struct point
-	{
-		int x;
-		int y;
-	};
-
-	struct button
-	{
-		point leftTop; // 左上の座標
-		point rightDown; // 右下の座標
-		bool isClickArea; // true → ボタンをクリックした
-	};
-
 	void ImGuiInput();
 	bool IsInArea(button b); // 引数で渡したボタン上にマウスがある
 	void DrawButton(button b, int buttonColor); // ボタンの範囲を描画 開発時のみしか使用しない可能性あり
@@ -44,7 +32,7 @@ namespace Player
 void Player::Init()
 {
 	lineCount = 0;
-	lineWidth = 40.0f;
+	lineWidth = 30.0f;
 	GetMousePoint(&mouse.x, &mouse.y);
 
 	eraser = { 0, 0, 100, 100, false };
@@ -153,7 +141,10 @@ void Player::Draw()
 				y = drawLine[l][p].y;
 				nextX = drawLine[l][p + 1].x;
 				nextY = drawLine[l][p + 1].y;
-				DrawLine(x, y, nextX, nextY, c, lineW);
+
+				// 線or丸のみだと、不自然な描画になってしまうため、どちらも描画
+				DrawLine(x, y, nextX, nextY, c, lineW);	
+				DrawCircle(x, y, lineW / 2, c, TRUE);
 			}
 		}
 	}
@@ -186,9 +177,9 @@ void Player::ImGuiInput()
 
 bool Player::IsInArea(button b)
 {
-	if (b.leftTop.x < mouse.x && mouse.x < b.rightDown.x)
+	if (b.bArea.leftTop.x < mouse.x && mouse.x < b.bArea.rightDown.x)
 	{
-		if (b.leftTop.y < mouse.y && mouse.y < b.rightDown.y)
+		if (b.bArea.leftTop.y < mouse.y && mouse.y < b.bArea.rightDown.y)
 		{
 			return true;
 		}
@@ -198,9 +189,9 @@ bool Player::IsInArea(button b)
 
 void Player::DrawButton(button b, int buttonColor)
 {
-	int x1 = b.leftTop.x;
-	int y1 = b.leftTop.y;
-	int x2 = b.rightDown.x;
-	int y2 = b.rightDown.y;
+	int x1 = b.bArea.leftTop.x;
+	int y1 = b.bArea.leftTop.y;
+	int x2 = b.bArea.rightDown.x;
+	int y2 = b.bArea.rightDown.y;
 	DrawBox(x1, y1, x2, y2, buttonColor, TRUE);
 }

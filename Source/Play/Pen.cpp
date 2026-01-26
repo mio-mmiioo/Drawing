@@ -4,9 +4,10 @@
 
 namespace Pen
 {
+	const area CHANGE_PEN_WIDTH = { 80, 100, 120, 340 }; // ペンの太さを変更する場所
 	const point WIDTH_LINE_TOP = { 100, 120 }; // ペンの太さ変更線の上の座標
 	const point WIDTH_LINE_DOWN = { 100, 320 }; // ペンの太さ変更線の下の座標
-	const float WIDTH_LINE_WIDTH = 10.0f; // ペンの太さ変更線の太さ
+	const float WIDTH_LINE_WIDTH = 2.0f; // ペンの太さ変更線の太さ
 }
 
 void Pen::Init()
@@ -14,9 +15,14 @@ void Pen::Init()
 
 }
 
-void Pen::UpdateChangePenWidth(point mouse, float lineWidth)
+void Pen::UpdateChangePenWidth(point mouse, float* lineWidth, bool isClick, bool isDrag)
 {
+	int y = (mouse.y - WIDTH_LINE_TOP.y);
 
+	if (isClick == true)
+	{
+
+	}
 }
 
 void Pen::DrawChangePenWidth(float lineWidth)
