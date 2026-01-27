@@ -19,3 +19,9 @@ struct button
 	area bArea;
 	bool isClickArea; // true → ボタンをクリックした
 };
+
+namespace Area
+{
+	bool IsInArea(button b, point p); // true → 座標がボタンの範囲内にある
+	void DrawButton(button b, int buttonColor); // ボタンを指定した色で描画する
+}

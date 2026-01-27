@@ -10,8 +10,6 @@
 namespace Player
 {
 	void ImGuiInput();
-	bool IsInArea(button b); // 引数で渡したボタン上にマウスがある
-	void DrawButton(button b, int buttonColor); // ボタンの範囲を描画 開発時のみしか使用しない可能性あり
 
 	std::vector<std::vector<point>> drawLine; // 線の位置情報
 	std::vector<int> drawLineColor; // 線の色の情報
@@ -19,6 +17,7 @@ namespace Player
 	int lineCount; // 絵に描かれている線の数
 	float lineWidth; // ペンの太さ
 	point mouse; // マウスの座標
+	bool isCanUsePen; // true → ペンが使用可能 
 
 	button changeColor; // 色を変更
 	button changeWidth; // 線の幅を変更
@@ -32,23 +31,71 @@ namespace Player
 void Player::Init()
 {
 	lineCount = 0;
-	lineWidth = 30.0f;
+	lineWidth = 10.0f;
 	GetMousePoint(&mouse.x, &mouse.y);
+	isCanUsePen = false;
 
 	eraser = { 0, 0, 100, 100, false };
 	changeWidth = { 120, 0, 220, 100, false };
 	changeColor = { 240, 0, 340, 100, false };
-	penRed = 255;
-	penGreen = 255;
-	penBlue = 255;
+	penRed = 0;
+	penGreen = 0;
+	penBlue = 0;
 	penColor = GetColor(penRed, penGreen, penBlue);
 }
 
 void Player::Update()
 {
+	isCanUsePen = false;
 	GetMousePoint(&mouse.x, &mouse.y);
 	
 	//ImGuiInput();
+
+	// 1つ戻る
+	if (Input::IsKeyDown("back") && drawLine.size() > 0)
+	{
+		drawLine.pop_back();
+		lineCount -= 1;
+	}
+	// 色を変更する 機能の実装はまだ
+	if (Input::IsKeyDown("changeColor") && Area::IsInArea(changeColor, mouse) == true)
+	{
+		if (changeColor.isClickArea == true)
+		{
+			changeColor.isClickArea = false;
+		}
+		else
+		{
+			changeColor.isClickArea = true;
+		}
+	}
+	// 消しゴム
+	if (Input::IsKeyDown("eraser") && Area::IsInArea(eraser, mouse) == true)
+	{
+		if (eraser.isClickArea == true)
+		{
+			eraser.isClickArea = false;
+			penColor = GetColor(penRed, penGreen, penBlue);
+		}
+		else
+		{
+			eraser.isClickArea = true;
+			penColor = Color::ERASER;
+		}
+	}
+	// 線の太さを変更する 
+	if (Input::IsKeyDown("changeWidth") && Area::IsInArea(changeWidth, mouse) == true)
+	{
+		if (changeWidth.isClickArea == true)
+		{
+			changeWidth.isClickArea = false;
+		}
+		else
+		{
+			changeWidth.isClickArea = true;
+		}
+	}
+
 
 	// 線を描く
 	{
@@ -71,57 +118,13 @@ void Player::Update()
 		}
 	}
 
-	// 1つ戻る
-	if (Input::IsKeyDown("back") && drawLine.size() > 0)
-	{
-		drawLine.pop_back();
-		lineCount -= 1;
-	}
 
-	// 色を変更する 機能の実装はまだ
-	if (Input::IsKeyDown("changeColor") && IsInArea(changeColor) == true)
-	{
-		if (changeColor.isClickArea == true)
-		{
-			changeColor.isClickArea = false;
-		}
-		else
-		{
-			changeColor.isClickArea = true;
-		}
-	}
-
-	// 消しゴム
-	if (Input::IsKeyDown("eraser") && IsInArea(eraser) == true)
-	{
-		if (eraser.isClickArea == true)
-		{
-			eraser.isClickArea = false;
-			penColor = GetColor(penRed, penGreen, penBlue);
-		}
-		else
-		{
-			eraser.isClickArea = true;
-			penColor = Color::ERASER;
-		}
-	}
-
-	// 線の太さを変更する
-	if (Input::IsKeyDown("changeWidth") && IsInArea(changeWidth) == true)
-	{
-		if (changeWidth.isClickArea == true)
-		{
-			changeWidth.isClickArea = false;
-		}
-		else
-		{
-			changeWidth.isClickArea = true;
-		}
-	}
 }
 
 void Player::Draw()
 {
+	Pen::DrawCanvas();
+
 	// これまでに描いた線を描画
 	{
 		int x;
@@ -150,9 +153,9 @@ void Player::Draw()
 	}
 
 	// エリアを描画
-	DrawButton(changeColor, Color::AREA);
-	DrawButton(eraser, Color::AREA);
-	DrawButton(changeWidth, Color::AREA);
+	Area::DrawButton(changeColor, Color::AREA);
+	Area::DrawButton(eraser, Color::AREA);
+	Area::DrawButton(changeWidth, Color::AREA);
 	if (changeColor.isClickArea == true)
 	{
 		DrawCircle(100, 500, 20, Color::CHANGE_CIRCLE, TRUE); // 確認のために描画
@@ -175,23 +178,3 @@ void Player::ImGuiInput()
 	ImGui::End();
 }
 
-bool Player::IsInArea(button b)
-{
-	if (b.bArea.leftTop.x < mouse.x && mouse.x < b.bArea.rightDown.x)
-	{
-		if (b.bArea.leftTop.y < mouse.y && mouse.y < b.bArea.rightDown.y)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-void Player::DrawButton(button b, int buttonColor)
-{
-	int x1 = b.bArea.leftTop.x;
-	int y1 = b.bArea.leftTop.y;
-	int x2 = b.bArea.rightDown.x;
-	int y2 = b.bArea.rightDown.y;
-	DrawBox(x1, y1, x2, y2, buttonColor, TRUE);
-}

@@ -147,6 +147,7 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MyLibrary\Input.cpp" />
+    <ClCompile Include="Source\Play\Area.cpp" />
     <ClCompile Include="Source\Play\Pen.cpp" />
     <ClCompile Include="Source\Play\Player.cpp" />
     <ClCompile Include="Source\Play\PlayScene.cpp" />

@@ -62,6 +62,7 @@
     <ClCompile Include="Source\Play\Pen.cpp">
       <Filter>Play</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Play\Area.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h" />
@@ -117,5 +118,6 @@
     <ClInclude Include="Source\Play\Pen.h">
       <Filter>Play</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Play\Area.h" />
   </ItemGroup>
 </Project>

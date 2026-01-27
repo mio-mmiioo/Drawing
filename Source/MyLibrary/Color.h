@@ -13,11 +13,12 @@ namespace Color
 
 	// Playerで使用
 	const int LINE = RED;
-	const int ERASER = BLACK;
+	const int ERASER = WHITE;
 	const int AREA = GetColor(100, 200, 100);
 	const int CHANGE_CIRCLE = WHITE;
 
 	// Penで使用
-	const int PEN_CIRCLE = WHITE;
-	const int WIDTH_LINE = WHITE; // 線の太さのバー
+	const int CANVAS = WHITE;
+	const int PEN_CIRCLE = BLACK;
+	const int WIDTH_LINE = BLACK; // 線の太さのバー
 }
