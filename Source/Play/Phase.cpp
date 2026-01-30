@@ -8,7 +8,7 @@ namespace Phase
 	{
 		THEME, // お題入力
 		DRAWING, // お絵描き
-		WITE, // 待ち時間
+		WAITE, // 待ち時間
 		MAX_P_STATE
 	};
 
@@ -37,16 +37,20 @@ void Phase::Update()
 		break;
 	case P_STATE::DRAWING:
 		break;
-	case P_STATE::WITE:
+	case P_STATE::WAITE:
 		return;
 		break;
 	}
 
-	timer -= Time::DeltaTime();
+	if (state != P_STATE::WAITE)
+	{
+		timer -= Time::DeltaTime();
+	}
+
 	if (timer <= 0.0f)
 	{
 		phaseCount += 1;
-		if (phaseCount / 2 == 0)
+		if (phaseCount % 2 == 0)
 		{
 			timer += THEME_TIME;
 		}
@@ -60,7 +64,7 @@ void Phase::Update()
 void Phase::Draw()
 {
 	// タイマーの表示
-	ImGui::Begin("Phase");
-	ImGui::Text("timer:%f", timer);
-	ImGui::End();
+	//ImGui::Begin("Phase");
+	//ImGui::Text("timer:%f", timer);
+	//ImGui::End();
 }

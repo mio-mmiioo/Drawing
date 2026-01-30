@@ -19,12 +19,7 @@ namespace Player
 	point mouse; // マウスの座標
 	bool isCanUsePen; // true → ペンが使用可能 
 
-	button changeColor; // 色を変更
-	button changeWidth; // 線の幅を変更
-	button eraser; // 消しゴム
-	int penRed; // ペンの赤色の値
-	int penGreen; // ペンの緑色の値
-	int penBlue; // ペンの青色の値
+
 	int penColor; // ペンの色
 }
 
@@ -35,19 +30,17 @@ void Player::Init()
 	GetMousePoint(&mouse.x, &mouse.y);
 	isCanUsePen = false;
 
-	eraser = { 0, 0, 100, 100, false };
-	changeWidth = { 120, 0, 220, 100, false };
-	changeColor = { 240, 0, 340, 100, false };
-	penRed = 0;
-	penGreen = 0;
-	penBlue = 0;
-	penColor = GetColor(penRed, penGreen, penBlue);
+	Pen::Init();
+	Pen::SetColor(&penColor);
 }
 
 void Player::Update()
 {
 	isCanUsePen = false;
 	GetMousePoint(&mouse.x, &mouse.y);
+	Pen::SetMousePosition(mouse);
+
+	Pen::IsCanUse(&isCanUsePen);
 	
 	//ImGuiInput();
 
@@ -58,59 +51,36 @@ void Player::Update()
 		lineCount -= 1;
 	}
 	// 色を変更する 機能の実装はまだ
-	if (Input::IsKeyDown("changeColor") && Area::IsInArea(changeColor, mouse) == true)
+	if (Input::IsKeyDown("changeColor"))
 	{
-		if (changeColor.isClickArea == true)
-		{
-			changeColor.isClickArea = false;
-		}
-		else
-		{
-			changeColor.isClickArea = true;
-		}
+		Pen::ChangeColor(&penColor);
 	}
 	// 消しゴム
-	if (Input::IsKeyDown("eraser") && Area::IsInArea(eraser, mouse) == true)
+	if (Input::IsKeyDown("eraser"))
 	{
-		if (eraser.isClickArea == true)
-		{
-			eraser.isClickArea = false;
-			penColor = GetColor(penRed, penGreen, penBlue);
-		}
-		else
-		{
-			eraser.isClickArea = true;
-			penColor = Color::ERASER;
-		}
+		Pen::Erase(&penColor);
 	}
 	// 線の太さを変更する 
-	if (Input::IsKeyDown("changeWidth") && Area::IsInArea(changeWidth, mouse) == true)
+	if (Input::IsKeyDown("changeWidth"))
 	{
-		if (changeWidth.isClickArea == true)
-		{
-			changeWidth.isClickArea = false;
-		}
-		else
-		{
-			changeWidth.isClickArea = true;
-		}
+		Pen::ChangeWidth(&lineWidth);
 	}
 
 
 	// 線を描く
+	if (isCanUsePen == true)
 	{
-		point current = { mouse.x, mouse.y };
 		if (Input::IsKeyDown("drawing"))
 		{
 			std::vector<point> tmp;
-			tmp.push_back(current);
+			tmp.push_back(mouse);
 			drawLine.push_back(tmp);
 			drawLineColor.push_back(penColor);
 			drawLineWidth.push_back(lineWidth);
 		}
 		else if (Input::IsKeyKeepDown("drawing"))
 		{
-			drawLine[lineCount].push_back(current);
+			drawLine[lineCount].push_back(mouse);
 		}
 		else if (Input::IsKeyUp("drawing"))
 		{
@@ -123,8 +93,8 @@ void Player::Update()
 
 void Player::Draw()
 {
-	Pen::DrawCanvas();
-
+	Pen::Draw();
+	Pen::DrawChangePenWidth(lineWidth);
 	// これまでに描いた線を描画
 	{
 		int x;
@@ -151,19 +121,6 @@ void Player::Draw()
 			}
 		}
 	}
-
-	// エリアを描画
-	Area::DrawButton(changeColor, Color::AREA);
-	Area::DrawButton(eraser, Color::AREA);
-	Area::DrawButton(changeWidth, Color::AREA);
-	if (changeColor.isClickArea == true)
-	{
-		DrawCircle(100, 500, 20, Color::CHANGE_CIRCLE, TRUE); // 確認のために描画
-	}
-	if (changeWidth.isClickArea == true)
-	{
-		Pen::DrawChangePenWidth(lineWidth);
-	}
 }
 
 void Player::Release()
@@ -173,8 +130,9 @@ void Player::Release()
 
 void Player::ImGuiInput()
 {
-	ImGui::Begin("Player");
-	ImGui::InputFloat("lineWidth", &lineWidth);
-	ImGui::End();
+	//ImGui::Begin("Player");
+	//ImGui::InputFloat("lineWidth", &lineWidth);
+	//ImGui::Checkbox("Erase", &eraser.isClickArea);
+	//ImGui::End();
 }
 

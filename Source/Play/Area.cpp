@@ -1,11 +1,11 @@
 #include "Area.h"
 #include "DxLib.h"
 
-bool Area::IsInArea(button b, point p)
+bool Area::IsInArea(area a, point p)
 {
-	if (b.bArea.leftTop.x < p.x && p.x < b.bArea.rightDown.x)
+	if (a.leftTop.x < p.x && p.x < a.rightDown.x)
 	{
-		if (b.bArea.leftTop.y < p.y && p.y < b.bArea.rightDown.y)
+		if (a.leftTop.y < p.y && p.y < a.rightDown.y)
 		{
 			return true;
 		}
@@ -13,11 +13,11 @@ bool Area::IsInArea(button b, point p)
 	return false;
 }
 
-void Area::DrawButton(button b, int buttonColor)
+void Area::DrawArea(area a, int buttonColor)
 {
-	int x1 = b.bArea.leftTop.x;
-	int y1 = b.bArea.leftTop.y;
-	int x2 = b.bArea.rightDown.x;
-	int y2 = b.bArea.rightDown.y;
+	int x1 = a.leftTop.x;
+	int y1 = a.leftTop.y;
+	int x2 = a.rightDown.x;
+	int y2 = a.rightDown.y;
 	DrawBox(x1, y1, x2, y2, buttonColor, TRUE);
 }
