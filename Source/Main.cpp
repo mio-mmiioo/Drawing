@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Screen.h"
 #include "MyLibrary/Input.h"
+#include "MyLibrary/Time.h"
 #include "../ImGui/imgui_impl_dxlib.hpp"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -34,6 +35,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	// その他の初期化
 	Input::InitActionMap();
+	Time::Init();
 	SceneMaster::CreateFirst(); // 最初のシーンを作成
 
 	while (1)
@@ -41,6 +43,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 更新処理
 		Input::StateUpdate();
+		Time::Update();
 		ImGui_ImplDXlib_NewFrame();
 		ImGui::NewFrame();
 		SceneMaster::Update();

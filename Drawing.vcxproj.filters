@@ -63,6 +63,12 @@
       <Filter>Play</Filter>
     </ClCompile>
     <ClCompile Include="Source\Play\Area.cpp" />
+    <ClCompile Include="Source\Play\Phase.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Time.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h" />
@@ -119,5 +125,11 @@
       <Filter>Play</Filter>
     </ClInclude>
     <ClInclude Include="Source\Play\Area.h" />
+    <ClInclude Include="Source\Play\Phase.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Time.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
