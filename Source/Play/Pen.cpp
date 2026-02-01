@@ -19,18 +19,21 @@ namespace Pen
 
 	point pMouse; // playerのマウスの座標
 
-	std::vector<area> drawAreaList;
+	std::vector<area> drawAreaList; 
 
 	int penRed; // ペンの赤色の値
 	int penGreen; // ペンの緑色の値
 	int penBlue; // ペンの青色の値
+
+	// 画像
+	int hColorPaletteImage; // カラーパレットの画像
 }
 
 void Pen::Init()
 {
-	eraser = { 0, 0, 100, 100, false };
-	changeWidth = { 120, 0, 220, 100, false };
-	changeColor = { 240, 0, 340, 100, false };
+	eraser = { 800, 200, 820, 220, 0, 0, 0, 0, false };
+	changeWidth = { 820, 200, 840, 220, 0, 0, 0, 0, false };
+	changeColor = { 840, 200, 860, 220, 800, 300, 1000, 500, false };
 
 	penRed = 0;
 	penGreen = 100;
@@ -40,14 +43,43 @@ void Pen::Init()
 void Pen::Draw()
 {
 	Area::DrawArea(CANVAS, Color::CANVAS);
-	Area::DrawArea(changeColor.bArea, Color::AREA);
-	Area::DrawArea(eraser.bArea, Color::AREA);
-	Area::DrawArea(changeWidth.bArea, Color::AREA);
+	Area::DrawArea(changeColor.bArea, Color::B_COLOR);
+	Area::DrawArea(eraser.bArea, Color::B_ERASER);
+	Area::DrawArea(changeWidth.bArea, Color::B_WIDTH);
 
 	if (changeColor.isClickArea == true)
 	{
 		DrawCircle(100, 500, 20, Color::CHANGE_CIRCLE, TRUE); // 確認のために描画
 	}
+
+	// 色パレットの描画 ※画像に置き換える/毎回描画すると処理が重くなる可能性があるから
+	{
+		int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
+		int centerX = changeColor.cArea.leftTop.x + radius;
+		int centerY = changeColor.cArea.leftTop.y + radius;
+		
+		// 円形パレット
+		for (int y = -radius; y <= radius; y++) {
+			for (int x = -radius; x <= radius; x++) {
+				float d = sqrt(x * x + y * y);
+				if (d <= radius) {
+					// 角度と距離を計算
+					float h = (float)(atan2(y, x) * 180.0f / DX_PI) + 180.0f;
+					float s = d / radius;
+					MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
+					DrawPixel(centerX + x, centerY + y, GetColor(c.red, c.green, c.blue));
+				}
+			}
+		}
+
+		// 輝度
+		for (int i = 0; i < 200; i++) {
+			int gray = (int)(i * (255.0 / 200.0));
+			DrawLine(changeColor.cArea.leftTop.x + i, changeColor.cArea.rightDown.y + 20, changeColor.cArea.leftTop.x + i,
+				changeColor.cArea.rightDown.y + 50, GetColor(gray, gray, gray));
+		}
+	}
+
 }
 
 void Pen::SetMousePosition(point playerMouse)
@@ -71,13 +103,10 @@ void Pen::SetColor(int* penColor)
 	*penColor = GetColor(penRed, penGreen, penBlue);
 }
 
-void Pen::UpdateChangePenWidth(point mouse, float* lineWidth, bool isClick, bool isDrag)
+void Pen::UpdateChangePenWidth(float* lineWidth)
 {
-	int y = (mouse.y - WIDTH_LINE_TOP.y);
-	if (isClick == true)
-	{
-		*lineWidth = y / 4;
-	}
+	int y = (pMouse.y - WIDTH_LINE_TOP.y);
+	*lineWidth = y / 4;
 }
 
 // 色を変える処理、中身はまだ

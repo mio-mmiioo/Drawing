@@ -16,7 +16,8 @@ struct area
 
 struct button
 {
-	area bArea;
+	area bArea; // ボタンのエリア
+	area cArea; // ボタンを押した後に展開されるエリア
 	bool isClickArea; // true → ボタンをクリックした
 };
 
