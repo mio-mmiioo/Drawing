@@ -7,7 +7,7 @@ namespace Pen
 	void Draw();
 	void SetMousePosition(point playerMouse);
 	bool IsCanUse(bool* isCanUsePen);
-	void SetColor(int* penColor);
+	void SetColor(int* color);
 
 	void UpdateChangePenWidth(float* lineWidth);
 

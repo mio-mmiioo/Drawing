@@ -1,6 +1,7 @@
 #include "Pen.h"
 #include "DxLib.h"
 #include "../MyLibrary/Color.h"
+#include "../../ImGui/imgui.h"
 #include <vector>
 
 namespace Pen
@@ -20,10 +21,10 @@ namespace Pen
 	point pMouse; // playerのマウスの座標
 
 	std::vector<area> drawAreaList; 
-
-	int penRed; // ペンの赤色の値
-	int penGreen; // ペンの緑色の値
-	int penBlue; // ペンの青色の値
+	MY_RGB penColor; // ペンの色
+	//int penRed; // ペンの赤色の値
+	//int penGreen; // ペンの緑色の値
+	//int penBlue; // ペンの青色の値
 
 	// 画像
 	int hColorPaletteImage; // カラーパレットの画像
@@ -35,9 +36,10 @@ void Pen::Init()
 	changeWidth = { 820, 200, 840, 220, 0, 0, 0, 0, false };
 	changeColor = { 840, 200, 860, 220, 800, 300, 1000, 500, false };
 
-	penRed = 0;
-	penGreen = 100;
-	penBlue = 0;
+	penColor = { 0, 100, 0 };
+	//penRed = 0;
+	//penGreen = 100;
+	//penBlue = 0;
 }
 
 void Pen::Draw()
@@ -58,6 +60,9 @@ void Pen::Draw()
 		int centerX = changeColor.cArea.leftTop.x + radius;
 		int centerY = changeColor.cArea.leftTop.y + radius;
 		
+		// 現在の色の表示
+		DrawCircle(centerX, changeColor.cArea.leftTop.y - 20, 10.0f, Color::GetColorMYRGB(penColor), TRUE);
+		
 		// 円形パレット
 		for (int y = -radius; y <= radius; y++) {
 			for (int x = -radius; x <= radius; x++) {
@@ -68,6 +73,11 @@ void Pen::Draw()
 					float s = d / radius;
 					MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
 					DrawPixel(centerX + x, centerY + y, GetColor(c.red, c.green, c.blue));
+
+					if (c.red == penColor.red && c.green == penColor.green && c.blue == penColor.blue)
+					{
+						DrawCircle(centerX + x, centerY + y, Color::BLACK, FALSE);
+					}
 				}
 			}
 		}
@@ -78,6 +88,15 @@ void Pen::Draw()
 			DrawLine(changeColor.cArea.leftTop.x + i, changeColor.cArea.rightDown.y + 20, changeColor.cArea.leftTop.x + i,
 				changeColor.cArea.rightDown.y + 50, GetColor(gray, gray, gray));
 		}
+
+		// 現在の色を表示する
+		MY_HSV hsv = Color::RGBtoHSV(penColor);
+		DrawCircle(centerX, centerY, 5.0f, Color::BLACK, FALSE);
+		ImGui::Begin("RGB");
+		MY_RGB rgb = Color::HSVtoRGB(hsv.h, hsv.s, hsv.v);
+		ImGui::Text("H;%d, S:%d, V:%d", hsv.h, hsv.s, hsv.v);
+		ImGui::Text("R;%d, G:%d, B:%d", rgb.red, rgb.green, rgb.blue);
+		ImGui::End();
 	}
 
 }
@@ -98,9 +117,9 @@ bool Pen::IsCanUse(bool* isCanUsePen)
 	return false;
 }
 
-void Pen::SetColor(int* penColor)
+void Pen::SetColor(int* color)
 {
-	*penColor = GetColor(penRed, penGreen, penBlue);
+	*color = GetColor(penColor.red, penColor.green, penColor.blue);
 }
 
 void Pen::UpdateChangePenWidth(float* lineWidth)
@@ -126,6 +145,11 @@ void Pen::ChangeColor(int* color)
 		if (changeColor.isClickArea == true)
 		{
 			// ここで色を変える処理
+			int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
+			int centerX = changeColor.cArea.leftTop.x + radius;
+			int centerY = changeColor.cArea.leftTop.y + radius;
+			//if ()
+
 		}
 	}
 }
@@ -160,7 +184,7 @@ void Pen::Erase(int* color)
 		if (eraser.isClickArea == true)
 		{
 			eraser.isClickArea = false;
-			*color = GetColor(penRed, penGreen, penBlue);
+			*color = GetColor(penColor.red, penColor.green, penColor.blue);
 		}
 		else
 		{

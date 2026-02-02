@@ -1,5 +1,13 @@
 #pragma once
 #include "DxLib.h"
+#include "../Play/Area.h"
+
+struct MY_HSV
+{
+	float h; // êFëä 0Å`360 äpìxÇ≈êFÇåàÇﬂÇÈ
+	float s; // ç ìx 0Å`1 1Ç…ãﬂÇ¢ÇŸÇ«ëNÇ‚Ç©Ç…Ç»ÇÈ
+	float v; // ñæìx 0Å`1 ÇPÇ…ãﬂÇ¢ÇŸÇ«ñæÇÈÇ≠Ç»ÇÈ
+};
 
 struct MY_RGB
 {
@@ -11,6 +19,10 @@ struct MY_RGB
 namespace Color
 {
 	MY_RGB HSVtoRGB(float h, float s, float v);
+	MY_HSV RGBtoHSV(MY_RGB rgb);
+	int GetColorMYRGB(MY_RGB myRGB);
+	point GetH(MY_RGB myRGB);
+
 
 	const int BLACK = GetColor(0, 0, 0);
 	const int WHITE = GetColor(255, 255, 255);
