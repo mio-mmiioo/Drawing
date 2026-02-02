@@ -2,7 +2,10 @@
 #include "DxLib.h"
 #include "../MyLibrary/Color.h"
 #include "../../ImGui/imgui.h"
+#include "../Image.h"
 #include <vector>
+
+#define HUE_OFFSET 180.0f; // 色相のオフセット
 
 namespace Pen
 {
@@ -13,11 +16,21 @@ namespace Pen
 
 	const area CANVAS = { 50, 50, 650, 550 }; // 絵が描ける範囲
 
+	// 色変更関連
+	const int MAX_VALUE = 200; // 輝度
+	const float SELECT_COLOR_CIRCLE_R = 5.0f; // 選択されている色を示す円の半径
+	const float CURRENT_COLOR_CIRCLE_R = 10.0f; // 現在の色を示す円の半径
 	
+
+
 	button changeColor; // 色を変更
 	button changeWidth; // 線の幅を変更
 	button eraser; // 消しゴム
+	
+	area value; // 輝度
+	area colorPalette; // 画像として切り抜くカラーパレット
 
+	point currentColorCircle; // 現在の色を示す円の位置
 	point pMouse; // playerのマウスの座標
 
 	std::vector<area> drawAreaList; 
@@ -33,9 +46,42 @@ void Pen::Init()
 	eraser = { 800, 200, 820, 220, 0, 0, 0, 0, false };
 	changeWidth = { 820, 200, 840, 220, 0, 0, 0, 0, false };
 	changeColor = { 840, 200, 860, 220, 800, 300, 1000, 500, false };
-
+	value = { 800, 520, 800 + MAX_VALUE, 550 };
+	colorPalette = { 800, 200, 1000, 700 };
+	currentColorCircle = { 900, 250 };
 	penRGB = { 0, 100, 0 };
 	penHSV = Color::RGBtoHSV(penRGB);
+
+	hColorPaletteImage = -1;
+
+	int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
+	int centerX = changeColor.cArea.leftTop.x + radius;
+	int centerY = changeColor.cArea.leftTop.y + radius;
+	// 円形パレット
+	for (int y = -radius; y <= radius; y++) {
+		for (int x = -radius; x <= radius; x++) {
+			float d = sqrt(x * x + y * y);
+			if (d <= radius) {
+				// 角度と距離を計算
+				float h = (float)(atan2(y, x) * 180.0f / DX_PI) + HUE_OFFSET;
+				float s = d / radius;
+				MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
+				DrawPixel(centerX + x, centerY + y, GetColor(c.red, c.green, c.blue));
+			}
+		}
+	}
+
+	// 輝度
+	for (int i = 0; i < MAX_VALUE; i++) {
+		int gray = (int)(i * ((float)255 / (float)MAX_VALUE));
+		DrawLine(value.leftTop.x + i, value.leftTop.y, value.leftTop.x + i,
+			value.rightDown.y, GetColor(gray, gray, gray));
+	}
+
+	// 現在の色の表示
+	DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, Color::GetColorMYRGB(penRGB), TRUE);
+
+	Image::MakeImage(colorPalette, &hColorPaletteImage);
 }
 
 void Pen::Draw()
@@ -45,54 +91,10 @@ void Pen::Draw()
 	Area::DrawArea(eraser.bArea, Color::B_ERASER);
 	Area::DrawArea(changeWidth.bArea, Color::B_WIDTH);
 
+	// 色パレットの描画
 	if (changeColor.isClickArea == true)
 	{
-		DrawCircle(100, 500, 20, Color::CHANGE_CIRCLE, TRUE); // 確認のために描画
-	}
-
-	// 色パレットの描画 ※画像に置き換える/毎回描画すると処理が重くなる可能性があるから
-	{
-		int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
-		int centerX = changeColor.cArea.leftTop.x + radius;
-		int centerY = changeColor.cArea.leftTop.y + radius;
-		
-		// 現在の色の表示
-		DrawCircle(centerX, changeColor.cArea.leftTop.y - 20, 10.0f, Color::GetColorMYRGB(penRGB), TRUE);
-		
-		// 円形パレット
-		for (int y = -radius; y <= radius; y++) {
-			for (int x = -radius; x <= radius; x++) {
-				float d = sqrt(x * x + y * y);
-				if (d <= radius) {
-					// 角度と距離を計算
-					float h = (float)(atan2(y, x) * 180.0f / DX_PI) + 180.0f;
-					float s = d / radius;
-					MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
-					DrawPixel(centerX + x, centerY + y, GetColor(c.red, c.green, c.blue));
-				}
-			}
-		}
-
-		// 輝度
-		for (int i = 0; i < 200; i++) {
-			int gray = (int)(i * (255.0 / 200.0));
-			DrawLine(changeColor.cArea.leftTop.x + i, changeColor.cArea.rightDown.y + 20, changeColor.cArea.leftTop.x + i,
-				changeColor.cArea.rightDown.y + 50, GetColor(gray, gray, gray));
-		}
-
-		// 現在の選択色からHSVを出す
-		penHSV = Color::RGBtoHSV(penRGB);
-
-		// HSVから座標を逆算 (角度hは補正分を引く)
-		float h = penHSV.h - 180.0f; // 取得時に足した分を引く
-		float rad = h * DX_PI_F / 180.0f;
-		float s = penHSV.s;
-
-		int cursorX = centerX + (int)(cos(rad) * s * radius);
-		int cursorY = centerY + (int)(sin(rad) * s * radius);
-
-		// 選択位置に丸を描画
-		DrawCircle(cursorX, cursorY, 5, Color::BLACK, FALSE);
+		DrawGraph(colorPalette.leftTop.x, colorPalette.leftTop.y, hColorPaletteImage, TRUE);
 	}
 
 }
@@ -151,27 +153,59 @@ void Pen::ChangeColor(int* color)
 		// カラーパレットとマウスの距離が一定以内の場合
 		if (Area::CheckPointDistance(center, pMouse, radius) == true)
 		{
-			float h = (float)(atan2((pMouse.y - center.y), (pMouse.x - center.x)) * 180.0f / DX_PI) + 180.0f;
-			if (h < 0)
-			{
-				h += 360.0f;
+			int centerX = changeColor.cArea.leftTop.x + radius;
+			int centerY = changeColor.cArea.leftTop.y + radius;
+			// 円形パレット
+			for (int y = -radius; y <= radius; y++) {
+				for (int x = -radius; x <= radius; x++) {
+					float d = sqrt(x * x + y * y);
+					if (d <= radius) {
+						// 角度と距離を計算
+						float h = (float)(atan2(y, x) * 180.0f / DX_PI) + HUE_OFFSET;
+						float s = d / radius;
+						MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
+						DrawPixel(centerX + x, centerY + y, GetColor(c.red, c.green, c.blue));
+					}
+				}
 			}
-			else if (h > 360.0f)
+
+			// 輝度
+			for (int i = 0; i < MAX_VALUE; i++) {
+				int gray = (int)(i * ((float)255 / (float)MAX_VALUE));
+				DrawLine(value.leftTop.x + i, value.leftTop.y, value.leftTop.x + i,
+					value.rightDown.y, GetColor(gray, gray, gray));
+			}
+
+			penHSV.h = (float)(atan2((pMouse.y - center.y), (pMouse.x - center.x)) * 180.0f / DX_PI) + HUE_OFFSET;
+			if (penHSV.h < 0)
 			{
-				h -= 360.0f;
+				penHSV.h += 360.0f;
+			}
+			else if (penHSV.h > 360.0f)
+			{
+				penHSV.h -= 360.0f;
 			}
 			float dist = (pMouse.x - center.x) * (pMouse.x - center.x) + (pMouse.y - center.y) * (pMouse.y - center.y);
 			dist = sqrtf(dist);
-			float s = dist / radius;
+			penHSV.s = dist / radius;
 
-			// 4. HSVをRGBに変換して変数に保存
-			penRGB = Color::HSVtoRGB(h, s, 1.0f);
+
+			// 輝度変更（未実装）
+			penHSV.v = 1.0f;
+
+
+
+			penRGB = Color::HSVtoRGB(penHSV.h, penHSV.s, penHSV.v);
 			*color = Color::GetColorMYRGB(penRGB);
+
+			// 現在の色の表示
+			DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, Color::GetColorMYRGB(penRGB), TRUE);
+
+			Image::MakeImage(colorPalette, &hColorPaletteImage); // 画像として保存する ※毎回描画すると処理が重くなる可能性があるため
 		}
 	}
 }
 
-// こっちに正しい処理をかく
 void Pen::ChangeWidth(float* lineWidth)
 {
 	if (Area::IsInArea(changeWidth.bArea, pMouse) == true)
