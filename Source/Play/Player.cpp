@@ -20,7 +20,7 @@ namespace Player
 	bool isCanUsePen; // true → ペンが使用可能 
 
 
-	int penColor; // ペンの色
+	int penRGB; // ペンの色
 }
 
 void Player::Init()
@@ -31,7 +31,7 @@ void Player::Init()
 	isCanUsePen = false;
 
 	Pen::Init();
-	Pen::SetColor(&penColor);
+	Pen::SetColor(&penRGB);
 }
 
 void Player::Update()
@@ -53,12 +53,12 @@ void Player::Update()
 	// 色を変更する 機能の実装はまだ
 	if (Input::IsKeyDown("changeColor"))
 	{
-		Pen::ChangeColor(&penColor);
+		Pen::ChangeColor(&penRGB);
 	}
 	// 消しゴム
 	if (Input::IsKeyDown("eraser"))
 	{
-		Pen::Erase(&penColor);
+		Pen::Erase(&penRGB);
 	}
 	// 線の太さを変更する 
 	if (Input::IsKeyDown("changeWidth"))
@@ -75,7 +75,7 @@ void Player::Update()
 			std::vector<point> tmp;
 			tmp.push_back(mouse);
 			drawLine.push_back(tmp);
-			drawLineColor.push_back(penColor);
+			drawLineColor.push_back(penRGB);
 			drawLineWidth.push_back(lineWidth);
 		}
 		else if (Input::IsKeyKeepDown("drawing"))

@@ -1,6 +1,16 @@
 #include "Area.h"
 #include "DxLib.h"
 
+bool Area::CheckPointDistance(point p1, point p2, float distance)
+{
+	float d = (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
+	if (distance * distance > d)
+	{
+		return true;
+	}
+	return false;
+}
+
 bool Area::IsInArea(area a, point p)
 {
 	if (a.leftTop.x < p.x && p.x < a.rightDown.x)

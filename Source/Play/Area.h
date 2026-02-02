@@ -23,6 +23,7 @@ struct button
 
 namespace Area
 {
+	bool CheckPointDistance(point p1, point p2, float distance); // true → distanceの範囲内にp1とp2が存在する
 	bool IsInArea(area a, point p); // true → 座標がボタンの範囲内にある
 	void DrawArea(area a, int buttonColor); // ボタンを指定した色で描画する
 }
