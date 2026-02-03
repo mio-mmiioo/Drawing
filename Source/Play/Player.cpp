@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "DxLib.h"
 #include "../../ImGui/imgui.h"
+#include "../MyLibrary/Time.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
 #include "Pen.h"
@@ -9,6 +10,22 @@
 
 namespace Player
 {
+	enum PHASE
+	{
+		THEME, // お題入力
+		DRAWING, // お絵描き
+		WAITE, // 待ち時間
+		MAX_P_STATE
+	};
+
+	const float THEME_TIME = 10.0f; // お題入力 60秒
+	const float DRAWING_TIME = 30.0f; // お絵描き 180秒
+
+	void UpdateDrawing(); // ペンで絵を描く処理
+	void DrawDrawing(); // お絵描き関連の描画
+	void UpdateTheme(); // お題を入力する処理
+	void DrawTheme(); // お題入力関連の描画
+	void DrawDrawing();
 	void ImGuiInput();
 
 	std::vector<std::vector<point>> drawLine; // 線の位置情報
@@ -19,8 +36,12 @@ namespace Player
 	point mouse; // マウスの座標
 	bool isCanUsePen; // true → ペンが使用可能 
 
-
+	PHASE phase; // 状態を管理する
+	float timer; // 時間を管理するための変数
 	int penRGB; // ペンの色
+
+	// 画像
+	int hSendImage; // 送るデータ
 }
 
 void Player::Init()
@@ -29,6 +50,10 @@ void Player::Init()
 	lineWidth = 10.0f;
 	GetMousePoint(&mouse.x, &mouse.y);
 	isCanUsePen = false;
+	phase = PHASE::THEME;
+	timer = THEME_TIME;
+	penRGB = -1;
+	hSendImage = -1;
 
 	Pen::Init();
 	Pen::SetColor(&penRGB);
@@ -36,13 +61,74 @@ void Player::Init()
 
 void Player::Update()
 {
-	isCanUsePen = false;
 	GetMousePoint(&mouse.x, &mouse.y);
-	Pen::SetMousePosition(mouse);
+	timer -= Time::DeltaTime();
 
+	ImGuiInput();
+
+	switch (phase)
+	{
+	case PHASE::THEME:
+		UpdateTheme();
+		break;
+	case PHASE::DRAWING:
+		UpdateDrawing();
+		break;
+	case PHASE::WAITE:
+		timer += Time::DeltaTime();
+		break;
+	default:
+		break;
+	}
+
+	if (timer <= 0.0f)
+	{
+		if (phase == PHASE::DRAWING)
+		{
+			Pen::MakeCanvasImage(&hSendImage); // サーバーに送るデータを作成
+			timer += THEME_TIME;
+			phase = PHASE::THEME;
+			drawLine.clear();
+			drawLineColor.clear();
+			drawLineWidth.clear();
+			lineCount = 0;
+		}
+		else if (phase == PHASE::THEME)
+		{
+			timer += DRAWING_TIME;
+			phase = PHASE::DRAWING;
+		}
+	}
+}
+
+void Player::Draw()
+{
+	// フェーズによって描画内容を変更する
+	switch (phase)
+	{
+	case PHASE::THEME:
+		DrawTheme();
+		break;
+	case PHASE::DRAWING:
+		DrawDrawing();
+		break;
+	case PHASE::WAITE:
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::Release()
+{
+	drawLine.clear();
+}
+
+void Player::UpdateDrawing()
+{
+	isCanUsePen = false;
+	Pen::SetMousePosition(mouse);
 	Pen::IsCanUse(&isCanUsePen);
-	
-	//ImGuiInput();
 
 	// 1つ戻る
 	if (Input::IsKeyDown("back") && drawLine.size() > 0)
@@ -50,7 +136,7 @@ void Player::Update()
 		drawLine.pop_back();
 		lineCount -= 1;
 	}
-	// 色を変更する 機能の実装はまだ
+	// 色を変更する
 	if (Input::IsKeyDown("changeColor"))
 	{
 		Pen::ChangeColor(&penRGB);
@@ -60,12 +146,11 @@ void Player::Update()
 	{
 		Pen::Erase(&penRGB);
 	}
-	// 線の太さを変更する 
+	// 線の太さを変更する 機能の実装はまだ
 	if (Input::IsKeyDown("changeWidth"))
 	{
 		Pen::ChangeWidth(&lineWidth);
 	}
-
 
 	// 線を描く
 	if (isCanUsePen == true)
@@ -87,11 +172,9 @@ void Player::Update()
 			lineCount += 1;
 		}
 	}
-
-
 }
 
-void Player::Draw()
+void Player::DrawDrawing()
 {
 	Pen::Draw();
 	Pen::DrawChangePenWidth(lineWidth);
@@ -116,23 +199,42 @@ void Player::Draw()
 				nextY = drawLine[l][p + 1].y;
 
 				// 線or丸のみだと、不自然な描画になってしまうため、どちらも描画
-				DrawLine(x, y, nextX, nextY, c, lineW);	
+				DrawLine(x, y, nextX, nextY, c, lineW);
 				DrawCircle(x, y, lineW / 2, c, TRUE);
 			}
 		}
 	}
 }
 
-void Player::Release()
+void Player::UpdateTheme()
 {
-	drawLine.clear();
+}
+
+void Player::DrawTheme()
+{
+	DrawGraph(50, 50, hSendImage, TRUE);
 }
 
 void Player::ImGuiInput()
 {
-	//ImGui::Begin("Player");
-	//ImGui::InputFloat("lineWidth", &lineWidth);
-	//ImGui::Checkbox("Erase", &eraser.isClickArea);
-	//ImGui::End();
+	ImGui::Begin("Player");
+	switch (phase)
+	{
+	case PHASE::THEME:
+		ImGui::Text("THEME");
+		break;
+	case PHASE::DRAWING:
+		ImGui::Text("DRAWING");
+		break;
+	case PHASE::WAITE:
+		ImGui::Text("WAITE");
+		break;
+	default:
+		ImGui::Text("NO_STATE");
+		break;
+	}
+
+	ImGui::Text("timer : %f", timer);
+	ImGui::End();
 }
 

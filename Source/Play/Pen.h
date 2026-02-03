@@ -7,6 +7,7 @@ namespace Pen
 	void Draw();
 	void SetMousePosition(point playerMouse);
 	bool IsCanUse(bool* isCanUsePen);
+	void MakeCanvasImage(int* hImage); // 引数に、キャンバスに書かれている絵を画像として保存する
 	void SetColor(int* color);
 
 	void UpdateChangePenWidth(float* lineWidth);

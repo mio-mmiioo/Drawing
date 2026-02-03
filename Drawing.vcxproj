@@ -152,9 +152,9 @@
     <ClCompile Include="Source\MyLibrary\Time.cpp" />
     <ClCompile Include="Source\Play\Area.cpp" />
     <ClCompile Include="Source\Play\Pen.cpp" />
-    <ClCompile Include="Source\Play\Phase.cpp" />
     <ClCompile Include="Source\Play\Player.cpp" />
     <ClCompile Include="Source\Play\PlayScene.cpp" />
+    <ClCompile Include="Source\Play\Theme.cpp" />
     <ClCompile Include="Source\Result\ResultScene.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Title\TitleScene.cpp" />
@@ -176,9 +176,9 @@
     <ClInclude Include="Source\MyLibrary\Time.h" />
     <ClInclude Include="Source\Play\Area.h" />
     <ClInclude Include="Source\Play\Pen.h" />
-    <ClInclude Include="Source\Play\Phase.h" />
     <ClInclude Include="Source\Play\Player.h" />
     <ClInclude Include="Source\Play\PlayScene.h" />
+    <ClInclude Include="Source\Play\Theme.h" />
     <ClInclude Include="Source\Result\ResultScene.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Screen.h" />

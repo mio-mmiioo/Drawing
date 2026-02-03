@@ -115,6 +115,11 @@ bool Pen::IsCanUse(bool* isCanUsePen)
 	return false;
 }
 
+void Pen::MakeCanvasImage(int* hImage)
+{
+	Image::MakeImage(CANVAS, hImage);
+}
+
 void Pen::SetColor(int* color)
 {
 	*color = GetColor(penRGB.red, penRGB.green, penRGB.blue);
@@ -153,8 +158,6 @@ void Pen::ChangeColor(int* color)
 		// カラーパレットとマウスの距離が一定以内の場合
 		if (Area::CheckPointDistance(center, pMouse, radius) == true)
 		{
-			int centerX = changeColor.cArea.leftTop.x + radius;
-			int centerY = changeColor.cArea.leftTop.y + radius;
 			// 円形パレット
 			for (int y = -radius; y <= radius; y++) {
 				for (int x = -radius; x <= radius; x++) {
@@ -164,7 +167,7 @@ void Pen::ChangeColor(int* color)
 						float h = (float)(atan2(y, x) * 180.0f / DX_PI) + HUE_OFFSET;
 						float s = d / radius;
 						MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
-						DrawPixel(centerX + x, centerY + y, GetColor(c.red, c.green, c.blue));
+						DrawPixel(center.x + x, center.y + y, GetColor(c.red, c.green, c.blue));
 					}
 				}
 			}
