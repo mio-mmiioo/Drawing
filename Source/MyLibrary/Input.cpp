@@ -41,7 +41,7 @@ void Input::InitActionMap()
     
     
     // 開発時のみの可能性あり
-    inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_SPACE} }; // 次のシーンに遷移する
+    inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_P} }; // 次のシーンに遷移する
     inputActionMap["exit"] = { {InputType::keyboard, KEY_INPUT_ESCAPE} }; // プログラムを終了する
     inputActionMap["makeImage"] = { {InputType::keyboard, KEY_INPUT_I} }; // 画像を作成する
 }

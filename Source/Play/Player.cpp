@@ -4,6 +4,7 @@
 #include "../MyLibrary/Time.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
+#include "Theme.h"
 #include "Pen.h"
 #include "Area.h"
 #include <vector>
@@ -18,7 +19,7 @@ namespace Player
 		MAX_P_STATE
 	};
 
-	const float THEME_TIME = 10.0f; // お題入力 60秒
+	const float THEME_TIME = 30.0f; // お題入力 60秒
 	const float DRAWING_TIME = 30.0f; // お絵描き 180秒
 
 	void UpdateDrawing(); // ペンで絵を描く処理
@@ -56,6 +57,7 @@ void Player::Init()
 	hSendImage = -1;
 
 	Pen::Init();
+	Theme::Init();
 	Pen::SetColor(&penRGB);
 }
 
@@ -95,6 +97,7 @@ void Player::Update()
 		}
 		else if (phase == PHASE::THEME)
 		{
+			Theme::MakeThemeImage(&hSendImage);
 			timer += DRAWING_TIME;
 			phase = PHASE::DRAWING;
 		}
@@ -176,6 +179,7 @@ void Player::UpdateDrawing()
 
 void Player::DrawDrawing()
 {
+	DrawGraph(50, 30, hSendImage, TRUE); // マジックナンバー使用中
 	Pen::Draw();
 	Pen::DrawChangePenWidth(lineWidth);
 	// これまでに描いた線を描画
@@ -208,11 +212,13 @@ void Player::DrawDrawing()
 
 void Player::UpdateTheme()
 {
+	Theme::InputTheme();
 }
 
 void Player::DrawTheme()
 {
-	DrawGraph(50, 50, hSendImage, TRUE);
+	DrawGraph(50, 50, hSendImage, TRUE); // マジックナンバー使用されているよ
+	Theme::Draw();
 }
 
 void Player::ImGuiInput()
