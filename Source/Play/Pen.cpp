@@ -9,6 +9,8 @@
 
 namespace Pen
 {
+	void DrawPalette(int radius, point circleCenter); // パレットの描画 ※負荷がかかる処理なので、毎フレーム書かないこと
+
 	const area CHANGE_PEN_WIDTH = { 80, 100, 120, 340 }; // ペンの太さを変更する場所
 	const point WIDTH_LINE_TOP = { 100, 120 }; // ペンの太さ変更線の上の座標
 	const point WIDTH_LINE_DOWN = { 100, 320 }; // ペンの太さ変更線の下の座標
@@ -20,8 +22,6 @@ namespace Pen
 	const int MAX_VALUE = 200; // 輝度
 	const float SELECT_COLOR_CIRCLE_R = 5.0f; // 選択されている色を示す円の半径
 	const float CURRENT_COLOR_CIRCLE_R = 10.0f; // 現在の色を示す円の半径
-	
-
 
 	button changeColor; // 色を変更
 	button changeWidth; // 線の幅を変更
@@ -55,28 +55,8 @@ void Pen::Init()
 	hColorPaletteImage = -1;
 
 	int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
-	int centerX = changeColor.cArea.leftTop.x + radius;
-	int centerY = changeColor.cArea.leftTop.y + radius;
-	// 円形パレット
-	for (int y = -radius; y <= radius; y++) {
-		for (int x = -radius; x <= radius; x++) {
-			float d = sqrt(x * x + y * y);
-			if (d <= radius) {
-				// 角度と距離を計算
-				float h = (float)(atan2(y, x) * 180.0f / DX_PI) + HUE_OFFSET;
-				float s = d / radius;
-				MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
-				DrawPixel(centerX + x, centerY + y, GetColor(c.red, c.green, c.blue));
-			}
-		}
-	}
-
-	// 輝度
-	for (int i = 0; i < MAX_VALUE; i++) {
-		int gray = (int)(i * ((float)255 / (float)MAX_VALUE));
-		DrawLine(value.leftTop.x + i, value.leftTop.y, value.leftTop.x + i,
-			value.rightDown.y, GetColor(gray, gray, gray));
-	}
+	point center = { changeColor.cArea.leftTop.x + radius, changeColor.cArea.leftTop.y + radius };
+	DrawPalette(radius, center);
 
 	// 現在の色の表示
 	DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, Color::GetColorMYRGB(penRGB), TRUE);
@@ -122,7 +102,7 @@ void Pen::MakeCanvasImage(int* hImage)
 
 void Pen::SetColor(int* color)
 {
-	*color = GetColor(penRGB.red, penRGB.green, penRGB.blue);
+	*color = Color::GetColorMYRGB(penRGB);
 }
 
 void Pen::UpdateChangePenWidth(float* lineWidth)
@@ -134,51 +114,17 @@ void Pen::UpdateChangePenWidth(float* lineWidth)
 // 色を変える処理、中身はまだ
 void Pen::ChangeColor(int* color)
 {
-	if (Area::IsInArea(changeColor.bArea, pMouse) == true)
-	{
-		if (changeColor.isClickArea == true)
-		{
-			changeColor.isClickArea = false;
-		}
-		else
-		{
-			changeColor.isClickArea = true;
-		}
-	}
+	Area::IsClickArea(changeColor.bArea, pMouse, &changeColor.isClickArea);
 
 	if (changeColor.isClickArea == true)
 	{
 		// ここで色を変える処理
 		int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
-		point center = {
-			changeColor.cArea.leftTop.x + radius,
-			changeColor.cArea.leftTop.y + radius
-		};
+		point center = { changeColor.cArea.leftTop.x + radius, changeColor.cArea.leftTop.y + radius };
 
 		// カラーパレットとマウスの距離が一定以内の場合
 		if (Area::CheckPointDistance(center, pMouse, radius) == true)
 		{
-			// 円形パレット
-			for (int y = -radius; y <= radius; y++) {
-				for (int x = -radius; x <= radius; x++) {
-					float d = sqrt(x * x + y * y);
-					if (d <= radius) {
-						// 角度と距離を計算
-						float h = (float)(atan2(y, x) * 180.0f / DX_PI) + HUE_OFFSET;
-						float s = d / radius;
-						MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
-						DrawPixel(center.x + x, center.y + y, GetColor(c.red, c.green, c.blue));
-					}
-				}
-			}
-
-			// 輝度
-			for (int i = 0; i < MAX_VALUE; i++) {
-				int gray = (int)(i * ((float)255 / (float)MAX_VALUE));
-				DrawLine(value.leftTop.x + i, value.leftTop.y, value.leftTop.x + i,
-					value.rightDown.y, GetColor(gray, gray, gray));
-			}
-
 			penHSV.h = (float)(atan2((pMouse.y - center.y), (pMouse.x - center.x)) * 180.0f / DX_PI) + HUE_OFFSET;
 			if (penHSV.h < 0)
 			{
@@ -191,43 +137,33 @@ void Pen::ChangeColor(int* color)
 			float dist = (pMouse.x - center.x) * (pMouse.x - center.x) + (pMouse.y - center.y) * (pMouse.y - center.y);
 			dist = sqrtf(dist);
 			penHSV.s = dist / radius;
-
-
-			// 輝度変更（未実装）
-			penHSV.v = 1.0f;
-
-
-
-			penRGB = Color::HSVtoRGB(penHSV.h, penHSV.s, penHSV.v);
-			*color = Color::GetColorMYRGB(penRGB);
-
-			// 現在の色の表示
-			DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, Color::GetColorMYRGB(penRGB), TRUE);
-
-			Image::MakeImage(colorPalette, &hColorPaletteImage); // 画像として保存する ※毎回描画すると処理が重くなる可能性があるため
 		}
+
+		// 輝度変更
+		if (Area::IsInArea(value, pMouse) == true)
+		{
+			float x = pMouse.x - value.leftTop.x;
+			penHSV.v = x / (float)MAX_VALUE;
+		}
+
+		penRGB = Color::HSVtoRGB(penHSV.h, penHSV.s, penHSV.v);
+		*color = Color::GetColorMYRGB(penRGB);
+
+		// 現在の色の表示
+		DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, *color, TRUE);
+		DrawPalette(radius, center);
+		Image::MakeImage(colorPalette, &hColorPaletteImage); // 画像として保存する ※毎回描画すると処理が重くなる可能性があるため
 	}
 }
 
 void Pen::ChangeWidth(float* lineWidth)
 {
-	if (Area::IsInArea(changeWidth.bArea, pMouse) == true)
+	Area::IsClickArea(changeWidth.bArea, pMouse, &changeWidth.isClickArea);
+	if (changeWidth.isClickArea == true)
 	{
-		if (changeWidth.isClickArea == true)
-		{
-			changeWidth.isClickArea = false;
-		}
-		else
-		{
-			changeWidth.isClickArea = true;
-		}
-
-		if (changeWidth.isClickArea == true)
-		{
-			// 線の太さ変更の処理
-			int y = (pMouse.y - WIDTH_LINE_TOP.y);
-			*lineWidth = y / 4;
-		}
+		// 線の太さ変更の処理
+		int y = (pMouse.y - WIDTH_LINE_TOP.y);
+		*lineWidth = y / 4;
 	}
 }
 
@@ -256,5 +192,29 @@ void Pen::DrawChangePenWidth(float lineWidth)
 		point p2 = WIDTH_LINE_DOWN;
 		DrawLine(p1.x, p1.y, p2.x, p2.y, Color::WIDTH_LINE, WIDTH_LINE_WIDTH);
 		DrawCircle(p1.x, p1.y + lineWidth * 4, lineWidth / 2, Color::PEN_CIRCLE, TRUE);
+	}
+}
+
+void Pen::DrawPalette(int radius, point circleCenter)
+{
+	// 円形パレット
+	for (int y = -radius; y <= radius; y++) {
+		for (int x = -radius; x <= radius; x++) {
+			float d = sqrt(x * x + y * y);
+			if (d <= radius) {
+				// 角度と距離を計算
+				float h = (float)(atan2(y, x) * 180.0f / DX_PI) + HUE_OFFSET;
+				float s = d / radius;
+				MY_RGB c = Color::HSVtoRGB(h, s, 1.0f);
+				DrawPixel(circleCenter.x + x, circleCenter.y + y, GetColor(c.red, c.green, c.blue));
+			}
+		}
+	}
+
+	// 輝度
+	for (int i = 0; i < MAX_VALUE; i++) {
+		int gray = (int)(i * (255.0f / (float)MAX_VALUE));
+		DrawLine(value.leftTop.x + i, value.leftTop.y, value.leftTop.x + i,
+			value.rightDown.y, GetColor(gray, gray, gray));
 	}
 }

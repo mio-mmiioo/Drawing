@@ -105,8 +105,3 @@ int Color::GetColorMYRGB(MY_RGB myRGB)
 	return ret;
 }
 
-point Color::GetH(MY_RGB myRGB)
-{
-
-	return point();
-}

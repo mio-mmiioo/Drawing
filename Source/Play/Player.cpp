@@ -19,7 +19,7 @@ namespace Player
 		MAX_P_STATE
 	};
 
-	const float THEME_TIME = 30.0f; // ‚¨‘è“ü—Í 60•b
+	const float THEME_TIME = 5.0; // ‚¨‘è“ü—Í 60•b
 	const float DRAWING_TIME = 30.0f; // ‚¨ŠG•`‚« 180•b
 
 	void UpdateDrawing(); // ƒyƒ“‚ÅŠG‚ğ•`‚­ˆ—

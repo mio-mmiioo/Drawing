@@ -21,9 +21,7 @@ namespace Color
 	MY_RGB HSVtoRGB(float h, float s, float v);
 	MY_HSV RGBtoHSV(MY_RGB rgb);
 	int GetColorMYRGB(MY_RGB myRGB);
-	point GetH(MY_RGB myRGB);
-
-
+	
 	const int BLACK = GetColor(0, 0, 0);
 	const int WHITE = GetColor(255, 255, 255);
 	const int RED = GetColor(255, 0, 0);
