@@ -39,6 +39,7 @@ void Input::InitActionMap()
     inputActionMap["changeWidth"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} };
     inputActionMap["eraser"] = { {InputType::keyboard, KEY_INPUT_E}, { InputType::mouse, MOUSE_INPUT_RIGHT } }; // 消しゴム
     
+    inputActionMap["ok"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} }; // タイトル画面などでボタンを押すときなどに使用
     
     // 開発時のみの可能性あり
     inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_P} }; // 次のシーンに遷移する

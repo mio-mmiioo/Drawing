@@ -62,12 +62,22 @@
     <ClCompile Include="Source\Play\Pen.cpp">
       <Filter>Play</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Play\Area.cpp" />
-    <ClCompile Include="Source\Play\Phase.cpp">
-      <Filter>Play</Filter>
-    </ClCompile>
     <ClCompile Include="Source\MyLibrary\Time.cpp">
       <Filter>MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Image.cpp" />
+    <ClCompile Include="Source\MyLibrary\Color.cpp" />
+    <ClCompile Include="Source\Title\TitleScreen.cpp">
+      <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Play\Area.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Play\Theme.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Result\ResultScreen.cpp">
+      <Filter>Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,12 +134,21 @@
     <ClInclude Include="Source\Play\Pen.h">
       <Filter>Play</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Play\Area.h" />
-    <ClInclude Include="Source\Play\Phase.h">
-      <Filter>Play</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MyLibrary\Time.h">
       <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Image.h" />
+    <ClInclude Include="Source\Title\TitleScreen.h">
+      <Filter>Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Play\Area.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Play\Theme.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Result\ResultScreen.h">
+      <Filter>Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

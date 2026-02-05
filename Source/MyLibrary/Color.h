@@ -32,6 +32,11 @@ namespace Color
 	// テキストカラー
 	const int TEXT = WHITE;
 
+	// TitleScreen
+	const int MAKE_ROOM = GetColor(100, 200, 100);
+	const int ENTER_ROOM = GetColor(100, 200, 100);
+	const int RULE = GetColor(100, 200, 100);
+
 	// Playerで使用
 	const int LINE = RED;
 	const int ERASER = WHITE;

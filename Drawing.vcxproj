@@ -156,8 +156,10 @@
     <ClCompile Include="Source\Play\PlayScene.cpp" />
     <ClCompile Include="Source\Play\Theme.cpp" />
     <ClCompile Include="Source\Result\ResultScene.cpp" />
+    <ClCompile Include="Source\Result\ResultScreen.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Title\TitleScene.cpp" />
+    <ClCompile Include="Source\Title\TitleScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\imconfig.h" />
@@ -179,10 +181,12 @@
     <ClInclude Include="Source\Play\Player.h" />
     <ClInclude Include="Source\Play\PlayScene.h" />
     <ClInclude Include="Source\Play\Theme.h" />
+    <ClInclude Include="Source\Result\ResultScreen.h" />
     <ClInclude Include="Source\Result\ResultScene.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\Title\TitleScene.h" />
+    <ClInclude Include="Source\Title\TitleScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
