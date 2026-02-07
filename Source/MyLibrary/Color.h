@@ -46,6 +46,6 @@ namespace Color
 	const int B_ERASER = WHITE;
 	const int B_WIDTH = RED;
 	const int B_COLOR = GREEN;
-	const int PEN_CIRCLE = BLACK;
-	const int WIDTH_LINE = BLACK; // 線の太さのバー
+	const int PEN_CIRCLE = WHITE;
+	const int WIDTH_LINE = WHITE; // 線の太さのバー
 }

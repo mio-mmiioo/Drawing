@@ -12,9 +12,13 @@ namespace Pen
 	void DrawPalette(int radius, point circleCenter); // パレットの描画 ※負荷がかかる処理なので、毎フレーム書かないこと
 
 	const area CHANGE_PEN_WIDTH = { 80, 100, 120, 340 }; // ペンの太さを変更する場所
-	const point WIDTH_LINE_TOP = { 100, 120 }; // ペンの太さ変更線の上の座標
-	const point WIDTH_LINE_DOWN = { 100, 320 }; // ペンの太さ変更線の下の座標
+	const point WIDTH_LINE_TOP = { 780, 320 }; // ペンの太さ変更線の上の座標
+	const point WIDTH_LINE_DOWN = { 780, 480 }; // ペンの太さ変更線の下の座標
 	const float WIDTH_LINE_WIDTH = 2.0f; // ペンの太さ変更線の太さ
+
+	const float MIN_PEN_WIDTH = 10.0f; // ペンの太さの最小半径
+	const float MAX_PEN_WIDTH = 20.0f; // ペンの太さの最大半径
+	const float PEN_BASE_SIZE = (float)(WIDTH_LINE_DOWN.y - WIDTH_LINE_TOP.y) / (MAX_PEN_WIDTH - MIN_PEN_WIDTH);
 
 	const area CANVAS = { 50, 50, 650, 550 }; // 絵が描ける範囲
 
@@ -44,7 +48,7 @@ namespace Pen
 void Pen::Init()
 {
 	eraser = { 800, 200, 820, 220, 0, 0, 0, 0, false };
-	changeWidth = { 820, 200, 840, 220, 0, 0, 0, 0, false };
+	changeWidth = { 820, 200, 840, 220, 760, 300, 800, 500, false };
 	changeColor = { 840, 200, 860, 220, 800, 300, 1000, 500, false };
 	value = { 800, 520, 800 + MAX_VALUE, 550 };
 	colorPalette = { 800, 200, 1000, 700 };
@@ -105,12 +109,6 @@ void Pen::SetColor(int* color)
 	*color = Color::GetColorMYRGB(penRGB);
 }
 
-void Pen::UpdateChangePenWidth(float* lineWidth)
-{
-	int y = (pMouse.y - WIDTH_LINE_TOP.y);
-	*lineWidth = y / 4;
-}
-
 // 色を変える処理、中身はまだ
 void Pen::ChangeColor(int* color)
 {
@@ -159,11 +157,15 @@ void Pen::ChangeColor(int* color)
 void Pen::ChangeWidth(float* lineWidth)
 {
 	Area::IsClickArea(changeWidth.bArea, pMouse, &changeWidth.isClickArea);
-	if (changeWidth.isClickArea == true)
+
+	if (changeWidth.isClickArea == true && Area::IsInArea(changeWidth.cArea, pMouse))
 	{
-		// 線の太さ変更の処理
-		int y = (pMouse.y - WIDTH_LINE_TOP.y);
-		*lineWidth = y / 4;
+		if (WIDTH_LINE_TOP.y < pMouse.y && pMouse.y < WIDTH_LINE_DOWN.y)
+		{
+			// 線の太さ変更の処理
+			int y = (pMouse.y - WIDTH_LINE_TOP.y);
+			*lineWidth = y / PEN_BASE_SIZE + MIN_PEN_WIDTH;
+		}
 	}
 }
 
@@ -191,7 +193,7 @@ void Pen::DrawChangePenWidth(float lineWidth)
 		point p1 = WIDTH_LINE_TOP;
 		point p2 = WIDTH_LINE_DOWN;
 		DrawLine(p1.x, p1.y, p2.x, p2.y, Color::WIDTH_LINE, WIDTH_LINE_WIDTH);
-		DrawCircle(p1.x, p1.y + lineWidth * 4, lineWidth / 2, Color::PEN_CIRCLE, TRUE);
+		DrawCircle(p1.x, p1.y + (lineWidth - MIN_PEN_WIDTH) * PEN_BASE_SIZE, lineWidth / 2, Color::PEN_CIRCLE, TRUE);
 	}
 }
 

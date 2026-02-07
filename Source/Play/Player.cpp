@@ -112,7 +112,7 @@ void Player::Draw()
 	case PHASE::THEME:
 		DrawTheme();
 		break;
-	case PHASE::DRAWING:
+	case PHASE::DRAWING:		
 		DrawDrawing();
 		break;
 	case PHASE::WAITE:
@@ -241,6 +241,7 @@ void Player::ImGuiInput()
 	}
 
 	ImGui::Text("timer : %f", timer);
+	ImGui::Text("pen width : %f", lineWidth);
 	ImGui::End();
 }
 
