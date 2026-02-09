@@ -145,9 +145,11 @@
     <ClCompile Include="ImGui\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="ImGui\imgui_tables.cpp" />
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Data.cpp" />
     <ClCompile Include="Source\Image.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MyLibrary\Color.cpp" />
+    <ClCompile Include="Source\MyLibrary\CsvReader.cpp" />
     <ClCompile Include="Source\MyLibrary\Input.cpp" />
     <ClCompile Include="Source\MyLibrary\Time.cpp" />
     <ClCompile Include="Source\Play\Area.cpp" />
@@ -172,8 +174,10 @@
     <ClInclude Include="ImGui\imstb_rectpack.h" />
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source\Data.h" />
     <ClInclude Include="Source\Image.h" />
     <ClInclude Include="Source\MyLibrary\Color.h" />
+    <ClInclude Include="Source\MyLibrary\CsvReader.h" />
     <ClInclude Include="Source\MyLibrary\Input.h" />
     <ClInclude Include="Source\MyLibrary\Time.h" />
     <ClInclude Include="Source\Play\Area.h" />

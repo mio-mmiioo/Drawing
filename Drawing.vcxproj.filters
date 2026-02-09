@@ -81,6 +81,10 @@
     <ClCompile Include="Source\MyLibrary\Color.cpp">
       <Filter>MyLibrary</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Data.cpp" />
+    <ClCompile Include="Source\MyLibrary\CsvReader.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h" />
@@ -151,6 +155,10 @@
     </ClInclude>
     <ClInclude Include="Source\Result\ResultScreen.h">
       <Filter>Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Data.h" />
+    <ClInclude Include="Source\MyLibrary\CsvReader.h">
+      <Filter>MyLibrary</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,0 +1,13 @@
+#pragma once
+#include <string>
+#include <map>
+#include <vector>
+
+#include "Play/Area.h"
+
+namespace Data
+{
+	void Init();
+
+	extern std::map<std::string, area> areaList; // ボタンなどの範囲のデータ
+}
