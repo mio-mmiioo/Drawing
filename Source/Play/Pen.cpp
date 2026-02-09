@@ -3,6 +3,7 @@
 #include "../MyLibrary/Color.h"
 #include "../../ImGui/imgui.h"
 #include "../Image.h"
+#include "../Data.h"
 #include <vector>
 
 #define HUE_OFFSET 180.0f; // 色相のオフセット
@@ -11,7 +12,6 @@ namespace Pen
 {
 	void DrawPalette(int radius, point circleCenter); // パレットの描画 ※負荷がかかる処理なので、毎フレーム書かないこと
 
-	const area CHANGE_PEN_WIDTH = { 80, 100, 120, 340 }; // ペンの太さを変更する場所
 	const point WIDTH_LINE_TOP = { 780, 320 }; // ペンの太さ変更線の上の座標
 	const point WIDTH_LINE_DOWN = { 780, 480 }; // ペンの太さ変更線の下の座標
 	const float WIDTH_LINE_WIDTH = 2.0f; // ペンの太さ変更線の太さ
@@ -20,8 +20,7 @@ namespace Pen
 	const float MAX_PEN_WIDTH = 20.0f; // ペンの太さの最大半径
 	const float PEN_BASE_SIZE = (float)(WIDTH_LINE_DOWN.y - WIDTH_LINE_TOP.y) / (MAX_PEN_WIDTH - MIN_PEN_WIDTH);
 
-	const area CANVAS = { 50, 50, 650, 550 }; // 絵が描ける範囲
-
+	
 	// 色変更関連
 	const int MAX_VALUE = 200; // 輝度
 	const float SELECT_COLOR_CIRCLE_R = 5.0f; // 選択されている色を示す円の半径
@@ -31,13 +30,14 @@ namespace Pen
 	button changeWidth; // 線の幅を変更
 	button eraser; // 消しゴム
 	
+	area canvas; // キャンバスの範囲
 	area value; // 輝度
-	area colorPalette; // 画像として切り抜くカラーパレット
+	area colorPalette; // カラーパレットの範囲
+	area changeColorImageArea; // 色変更の画像の範囲
 
 	point currentColorCircle; // 現在の色を示す円の位置
 	point pMouse; // playerのマウスの座標
 
-	std::vector<area> drawAreaList; 
 	MY_RGB penRGB; // ペンの色 RGB
 	MY_HSV penHSV; // ペンの色 HSV
 
@@ -47,30 +47,31 @@ namespace Pen
 
 void Pen::Init()
 {
-	eraser = { 800, 200, 820, 220, 0, 0, 0, 0, false };
-	changeWidth = { 820, 200, 840, 220, 760, 300, 800, 500, false };
-	changeColor = { 840, 200, 860, 220, 800, 300, 1000, 500, false };
-	value = { 800, 520, 800 + MAX_VALUE, 550 };
-	colorPalette = { 800, 200, 1000, 700 };
+	canvas = Data::areaList["Canvas"]; // 絵が描ける範囲
+	eraser = { Data::areaList["b-Eraser"], Data::areaList["c-Eraser"], false};
+	changeWidth = { Data::areaList["b-ChangeWidth"], Data::areaList["c-ChangeWidth"], false };
+	changeColor = { Data::areaList["b-ChangeColor"], Data::areaList["c-ChangeColor"], false };
+	value = Data::areaList["c-ColorValue"];
+	colorPalette = Data::areaList["c-ColorPalette"];
+	changeColorImageArea = Data::areaList["ColorImage"];
 	currentColorCircle = { 900, 250 };
 	penRGB = { 0, 100, 0 };
 	penHSV = Color::RGBtoHSV(penRGB);
 
 	hColorPaletteImage = -1;
 
-	int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
-	point center = { changeColor.cArea.leftTop.x + radius, changeColor.cArea.leftTop.y + radius };
+	int radius = (colorPalette.rightDown.x - colorPalette.leftTop.x) / 2;
+	point center = { colorPalette.leftTop.x + radius, colorPalette.leftTop.y + radius };
 	DrawPalette(radius, center);
 
 	// 現在の色の表示
 	DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, Color::GetColorMYRGB(penRGB), TRUE);
-
-	Image::MakeImage(colorPalette, &hColorPaletteImage);
+	Image::MakeImage(changeColorImageArea, &hColorPaletteImage);
 }
 
 void Pen::Draw()
 {
-	Area::DrawArea(CANVAS, Color::CANVAS);
+	Area::DrawArea(canvas, Color::CANVAS);
 	Area::DrawArea(changeColor.bArea, Color::B_COLOR);
 	Area::DrawArea(eraser.bArea, Color::B_ERASER);
 	Area::DrawArea(changeWidth.bArea, Color::B_WIDTH);
@@ -78,9 +79,8 @@ void Pen::Draw()
 	// 色パレットの描画
 	if (changeColor.isClickArea == true)
 	{
-		DrawGraph(colorPalette.leftTop.x, colorPalette.leftTop.y, hColorPaletteImage, TRUE);
+		DrawGraph(changeColorImageArea.leftTop.x, changeColorImageArea.leftTop.y, hColorPaletteImage, TRUE);
 	}
-
 }
 
 void Pen::SetMousePosition(point playerMouse)
@@ -91,7 +91,7 @@ void Pen::SetMousePosition(point playerMouse)
 bool Pen::IsCanUse(bool* isCanUsePen)
 {
 	// キャンバス内にあるなら使用可能　ないなら使用不可
-	if (Area::IsInArea(CANVAS, pMouse))
+	if (Area::IsInArea(canvas, pMouse))
 	{
 		*isCanUsePen = true;
 		return true;
@@ -101,7 +101,7 @@ bool Pen::IsCanUse(bool* isCanUsePen)
 
 void Pen::MakeCanvasImage(int* hImage)
 {
-	Image::MakeImage(CANVAS, hImage);
+	Image::MakeImage(canvas, hImage);
 }
 
 void Pen::SetColor(int* color)
@@ -117,8 +117,8 @@ void Pen::ChangeColor(int* color)
 	if (changeColor.isClickArea == true)
 	{
 		// ここで色を変える処理
-		int radius = (changeColor.cArea.rightDown.x - changeColor.cArea.leftTop.x) / 2;
-		point center = { changeColor.cArea.leftTop.x + radius, changeColor.cArea.leftTop.y + radius };
+		int radius = (colorPalette.rightDown.x - colorPalette.leftTop.x) / 2;
+		point center = { colorPalette.leftTop.x + radius, colorPalette.leftTop.y + radius };
 
 		// カラーパレットとマウスの距離が一定以内の場合
 		if (Area::CheckPointDistance(center, pMouse, radius) == true)
@@ -150,7 +150,7 @@ void Pen::ChangeColor(int* color)
 		// 現在の色の表示
 		DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, *color, TRUE);
 		DrawPalette(radius, center);
-		Image::MakeImage(colorPalette, &hColorPaletteImage); // 画像として保存する ※毎回描画すると処理が重くなる可能性があるため
+		Image::MakeImage(changeColorImageArea, &hColorPaletteImage); // 画像として保存する ※毎回描画すると処理が重くなる可能性があるため
 	}
 }
 

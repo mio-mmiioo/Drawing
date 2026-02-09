@@ -3,6 +3,7 @@
 #include "../Play/Area.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
+#include "../Data.h"
 
 namespace TitleScreen
 {
@@ -16,9 +17,9 @@ namespace TitleScreen
 
 void TitleScreen::Init()
 {
-	makeRoom = { 200, 500, 300, 550, 190, 490, 310, 560, false };
-	enterRoom = { 400, 500, 500, 550, 390, 490, 510, 560, false };
-	rule = { 900, 50, 950, 100, 100, 50, 900, 650, false };
+	makeRoom = { Data::areaList["b-MakeRoom"], Data::areaList["c-MakeRoom"], false};
+	enterRoom = { Data::areaList["b-EnterRoom"], Data::areaList["c-EnterRoom"], false };
+	rule = { Data::areaList["b-Rule"], Data::areaList["c-Rule"], false };
 }
 
 void TitleScreen::Update()

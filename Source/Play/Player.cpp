@@ -7,6 +7,7 @@
 #include "Theme.h"
 #include "Pen.h"
 #include "Area.h"
+#include "../Data.h"
 #include <vector>
 
 namespace Player
@@ -21,6 +22,9 @@ namespace Player
 
 	const float THEME_TIME = 5.0; // お題入力 60秒
 	const float DRAWING_TIME = 30.0f; // お絵描き 180秒
+
+	point canvasImageArea;
+	point themeImageArea;
 
 	void UpdateDrawing(); // ペンで絵を描く処理
 	void DrawDrawing(); // お絵描き関連の描画
@@ -47,6 +51,10 @@ namespace Player
 
 void Player::Init()
 {
+	canvasImageArea = Data::areaList["Canvas"].leftTop;
+	area tmp = Data::areaList["ThemeImage"];
+	themeImageArea = { tmp.leftTop.x, tmp.rightDown.y - tmp.leftTop.y };
+
 	lineCount = 0;
 	lineWidth = 10.0f;
 	GetMousePoint(&mouse.x, &mouse.y);
@@ -179,7 +187,7 @@ void Player::UpdateDrawing()
 
 void Player::DrawDrawing()
 {
-	DrawGraph(50, 30, hSendImage, TRUE); // マジックナンバー使用中
+	DrawGraph(themeImageArea.x, themeImageArea.y, hSendImage, TRUE); // マジックナンバー使用中
 	Pen::Draw();
 	Pen::DrawChangePenWidth(lineWidth);
 	// これまでに描いた線を描画
@@ -217,7 +225,7 @@ void Player::UpdateTheme()
 
 void Player::DrawTheme()
 {
-	DrawGraph(50, 50, hSendImage, TRUE); // マジックナンバー使用されているよ
+	DrawGraph(canvasImageArea.x, canvasImageArea.y, hSendImage, TRUE);
 	Theme::Draw();
 }
 

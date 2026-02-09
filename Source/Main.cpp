@@ -3,6 +3,7 @@
 #include "Screen.h"
 #include "MyLibrary/Input.h"
 #include "MyLibrary/Time.h"
+#include "Data.h"
 #include "../ImGui/imgui_impl_dxlib.hpp"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -34,6 +35,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ‚»‚Ì‘¼‚Ì‰Šú‰»
 	Input::InitActionMap();
 	Time::Init();
+	Data::Init();
 	SceneMaster::CreateFirst(); // Å‰‚ÌƒV[ƒ“‚ğì¬
 
 	while (1)
