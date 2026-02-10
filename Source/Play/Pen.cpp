@@ -34,6 +34,7 @@ namespace Pen
 	area value; // 輝度
 	area colorPalette; // カラーパレットの範囲
 	area changeColorImageArea; // 色変更の画像の範囲
+	area changeWidthClick; // 線の太さを変更できる範囲
 
 	point currentColorCircle; // 現在の色を示す円の位置
 	point pMouse; // playerのマウスの座標
@@ -54,6 +55,7 @@ void Pen::Init()
 	value = Data::areaList["c-ColorValue"];
 	colorPalette = Data::areaList["c-ColorPalette"];
 	changeColorImageArea = Data::areaList["ColorImage"];
+	changeWidthClick = Data::areaList["c-ChangeWidthClick"];
 	currentColorCircle = { 900, 250 };
 	penRGB = { 0, 100, 0 };
 	penHSV = Color::RGBtoHSV(penRGB);
@@ -157,15 +159,11 @@ void Pen::ChangeColor(int* color)
 void Pen::ChangeWidth(float* lineWidth)
 {
 	Area::IsClickArea(changeWidth.bArea, pMouse, &changeWidth.isClickArea);
-
-	if (changeWidth.isClickArea == true && Area::IsInArea(changeWidth.cArea, pMouse))
+	if (changeWidth.isClickArea == true && Area::IsInArea(changeWidthClick, pMouse))
 	{
-		if (WIDTH_LINE_TOP.y < pMouse.y && pMouse.y < WIDTH_LINE_DOWN.y)
-		{
-			// 線の太さ変更の処理
-			int y = (pMouse.y - WIDTH_LINE_TOP.y);
-			*lineWidth = y / PEN_BASE_SIZE + MIN_PEN_WIDTH;
-		}
+		// 線の太さ変更の処理
+		int y = (pMouse.y - WIDTH_LINE_TOP.y);
+		*lineWidth = y / PEN_BASE_SIZE + MIN_PEN_WIDTH;
 	}
 }
 
