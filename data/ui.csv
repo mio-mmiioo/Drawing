@@ -5,7 +5,6 @@ b-EnterRoom,nullptr,400,500,500,550,TRUE,FALSE,TRUE,入室ボタン
 c-EnterRoom,b-EnterRoom,390,490,510,560,TRUE,FALSE,FALSE,入室ボタンが押されたときに表示されるエリア
 b-Rule,nullptr,900,50,950,100,TRUE,FALSE,TRUE,ルール説明ボタン
 c-Rule,b-Rule,100,50,900,650,FALSE,TRUE,FALSE,ルールが表示される
-,,,,,,,,,
 Canvas,nullptr,50,50,650,550,TRUE,FALSE,FALSE,絵が描ける範囲
 b-Eraser,nullptr,800,200,820,220,TRUE,FALSE,TRUE,消しゴムボタン
 c-Eraser,b-Eraser,800,200,820,220,TRUE,FALSE,FALSE,消しゴム使用可能状態
@@ -17,5 +16,4 @@ c-ChangeColor,b-ChangeColor,840,200,860,220,TRUE,FALSE,FALSE,色変更中
 c-ColorPalette,b-ChangeColor,800,300,1000,500,FALSE,FALSE,FALSE,カラーパレットの範囲
 c-ColorValue,b-ChangeColor,800,520,1000,550,FALSE,FALSE,FALSE,輝度の範囲
 ColorImage,nullptr,800,220,1000,700,FALSE,FALSE,FALSE,カラー変更部分を切り抜く範囲
-,,,,,,,,,
 ThemeImage,nullptr,50,600,800,620,FALSE,FALSE,FALSE,文字入力を表示、切り抜く範囲
