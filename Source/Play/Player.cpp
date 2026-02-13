@@ -16,7 +16,7 @@ namespace Player
 	{
 		THEME, // お題入力
 		DRAWING, // お絵描き
-		WAIT, // 待ち時間
+		WAITE, // 待ち時間
 		MAX_P_STATE
 	};
 
@@ -30,8 +30,8 @@ namespace Player
 	void DrawDrawing(); // お絵描き関連の描画
 	void UpdateTheme(); // お題を入力する処理
 	void DrawTheme(); // お題入力関連の描画
-	void UpdateWait(); // 待ち時間の処理 ( ここで通信処理を入れる )
-	void DrawWait(); // 待ち時間の描画
+	void UpdateWaite(); // 待ち時間の処理 ( ここで通信処理を入れる )
+	void DrawWaite(); // 待ち時間の描画
 	void ImGuiInput(); 
 
 	std::vector<std::vector<point>> drawLine; // 線の位置情報
@@ -47,7 +47,8 @@ namespace Player
 	int penRGB; // ペンの色
 
 	// 画像
-	int hSendImage; // 送るデータ
+	int hSendImage; // 送信データ
+	int hRecvImage; // 受信データ
 }
 
 void Player::Init()
@@ -85,7 +86,8 @@ void Player::Update()
 	case PHASE::DRAWING:
 		UpdateDrawing();
 		break;
-	case PHASE::WAIT:
+	case PHASE::WAITE:
+		UpdateWaite();
 		timer += Time::DeltaTime();
 		break;
 	default:
@@ -124,7 +126,8 @@ void Player::Draw()
 	case PHASE::DRAWING:		
 		DrawDrawing();
 		break;
-	case PHASE::WAIT:
+	case PHASE::WAITE:
+		DrawWaite();
 		break;
 	default:
 		break;
@@ -230,12 +233,12 @@ void Player::DrawTheme()
 	Theme::Draw();
 }
 
-void Player::UpdateWait()
+void Player::UpdateWaite()
 {
 	// ここで通信待ちの処理、データの受け取りなどする
 }
 
-void Player::DrawWait()
+void Player::DrawWaite()
 {
 }
 
@@ -250,7 +253,7 @@ void Player::ImGuiInput()
 	case PHASE::DRAWING:
 		ImGui::Text("DRAWING");
 		break;
-	case PHASE::WAIT:
+	case PHASE::WAITE:
 		ImGui::Text("WAITE");
 		break;
 	default:
