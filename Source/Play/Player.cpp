@@ -4,11 +4,17 @@
 #include "../MyLibrary/Time.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
+#include "../MyLibrary/Client.h"
 #include "Theme.h"
 #include "Pen.h"
 #include "Area.h"
 #include "../Data.h"
 #include <vector>
+
+// 一時的にこの場所に書いている
+const std::string SERVER_IPADDRESS = "127.0.0.1";   // サーバーのIPアドレス
+const unsigned short SERVER_PORT = 8888;            // サーバーのポート番号
+
 
 namespace Player
 {
@@ -43,12 +49,17 @@ namespace Player
 	bool isCanUsePen; // true → ペンが使用可能 
 
 	PHASE phase; // 状態を管理する
+	PHASE nextPhase; // 次の状態
 	float timer; // 時間を管理するための変数
 	int penRGB; // ペンの色
 
 	// 画像
 	int hSendImage; // 送信データ
 	int hRecvImage; // 受信データ
+
+
+	Client* client;
+
 }
 
 void Player::Init()
@@ -62,6 +73,7 @@ void Player::Init()
 	GetMousePoint(&mouse.x, &mouse.y);
 	isCanUsePen = false;
 	phase = PHASE::THEME;
+	nextPhase = PHASE::WAITE;
 	timer = THEME_TIME;
 	penRGB = -1;
 	hSendImage = -1;
@@ -69,6 +81,9 @@ void Player::Init()
 	Pen::Init();
 	Theme::Init();
 	Pen::SetColor(&penRGB);
+
+	client = new Client(SERVER_IPADDRESS, SERVER_PORT);
+	client->Init();
 }
 
 void Player::Update()
@@ -100,7 +115,7 @@ void Player::Update()
 		{
 			Pen::MakeCanvasImage(&hSendImage); // サーバーに送るデータを作成
 			timer += THEME_TIME;
-			phase = PHASE::THEME;
+			nextPhase = PHASE::THEME;
 			drawLine.clear();
 			drawLineColor.clear();
 			drawLineWidth.clear();
@@ -110,8 +125,11 @@ void Player::Update()
 		{
 			Theme::MakeThemeImage(&hSendImage);
 			timer += DRAWING_TIME;
-			phase = PHASE::DRAWING;
+			nextPhase = PHASE::DRAWING;
 		}
+		phase = WAITE;
+		client->SetClient(PACKET({ hSendImage })); // サーバーに送るデータをセット
+		client->SendData();
 	}
 }
 
@@ -236,6 +254,12 @@ void Player::DrawTheme()
 void Player::UpdateWaite()
 {
 	// ここで通信待ちの処理、データの受け取りなどする
+	client->ReceiveData();
+	hRecvImage = client->GetClient().hImage;
+	if (hRecvImage > 0)
+	{
+		phase = nextPhase;
+	}
 }
 
 void Player::DrawWaite()

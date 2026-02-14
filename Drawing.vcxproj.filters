@@ -85,6 +85,9 @@
     <ClCompile Include="Source\MyLibrary\CsvReader.cpp">
       <Filter>MyLibrary</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Client.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h" />
@@ -158,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="Source\Data.h" />
     <ClInclude Include="Source\MyLibrary\CsvReader.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Client.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Packet.h">
       <Filter>MyLibrary</Filter>
     </ClInclude>
   </ItemGroup>

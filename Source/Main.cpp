@@ -1,3 +1,4 @@
+#define WIN32_LEAN_AND_MEAN
 #include "DxLib.h"
 #include "Scene.h"
 #include "Screen.h"
@@ -8,6 +9,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	SetDoubleStartValidFlag(TRUE);
 	SetGraphMode(Screen::WIDTH, Screen::HEIGHT, 32);
 	ChangeWindowMode(Screen::WINDOW_MODE); // WindowÉÇÅ[ÉhÇÃèÍçá
 	if (DxLib_Init() == -1)
