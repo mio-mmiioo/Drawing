@@ -32,7 +32,6 @@ public:
 
 	void SendData();	// データの送信
 	void ReceiveData();	// データの受信
-	//bool GetReceiveData(); // true → データを受信した
 
 private:
 	SOCKET sock_;					// 自身のソケット

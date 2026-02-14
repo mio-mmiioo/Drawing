@@ -20,45 +20,45 @@ namespace Player
 {
 	enum PHASE
 	{
-		THEME, // お題入力
-		DRAWING, // お絵描き
-		WAITE, // 待ち時間
+		THEME,		// お題入力
+		DRAWING,	// お絵描き
+		WAITE,		// 待ち時間
 		MAX_P_STATE
 	};
 
-	const float THEME_TIME = 5.0; // お題入力 60秒
-	const float DRAWING_TIME = 30.0f; // お絵描き 180秒
+	const float THEME_TIME = 5.0;		// お題入力 60秒
+	const float DRAWING_TIME = 30.0f;	// お絵描き 180秒
 
 	point canvasImageArea;
 	point themeImageArea;
 
-	void UpdateDrawing(); // ペンで絵を描く処理
-	void DrawDrawing(); // お絵描き関連の描画
-	void UpdateTheme(); // お題を入力する処理
-	void DrawTheme(); // お題入力関連の描画
-	void UpdateWaite(); // 待ち時間の処理 ( ここで通信処理を入れる )
-	void DrawWaite(); // 待ち時間の描画
-	void ImGuiInput(); 
+	void UpdateDrawing();	// ペンで絵を描く処理
+	void DrawDrawing();		// お絵描き関連の描画
+	void UpdateTheme();		// お題を入力する処理
+	void DrawTheme();		// お題入力関連の描画
+	void UpdateWaite();		// 待ち時間の処理 ( ここで通信処理を入れる )
+	void DrawWaite();		// 待ち時間の描画
+	void ImGuiInput();		// ImGuiの処理
 
 	std::vector<std::vector<point>> drawLine; // 線の位置情報
-	std::vector<int> drawLineColor; // 線の色の情報
-	std::vector<float> drawLineWidth; // 線の太さの情報
-	int lineCount; // 絵に描かれている線の数
-	float lineWidth; // ペンの太さ
-	point mouse; // マウスの座標
-	bool isCanUsePen; // true → ペンが使用可能 
+	std::vector<int> drawLineColor;		// 線の色の情報
+	std::vector<float> drawLineWidth;	// 線の太さの情報
+	int lineCount;		// 絵に描かれている線の数
+	float lineWidth;	// ペンの太さ
+	point mouse;		// マウスの座標
+	bool isCanUsePen;	// true → ペンが使用可能 
 
-	PHASE phase; // 状態を管理する
-	PHASE nextPhase; // 次の状態
-	float timer; // 時間を管理するための変数
-	int penRGB; // ペンの色
+	PHASE phase;		// 状態を管理する
+	PHASE nextPhase;	// 次の状態
+	float timer;		// 時間を管理するための変数
+	int penRGB;			// ペンの色
 
 	// 画像
 	int hSendImage; // 送信データ
 	int hRecvImage; // 受信データ
 
 
-	Client* client;
+	Client* client; // サーバーとやり取りをするためのクライアントクラス
 
 }
 
@@ -209,7 +209,7 @@ void Player::UpdateDrawing()
 
 void Player::DrawDrawing()
 {
-	DrawGraph(themeImageArea.x, themeImageArea.y, hSendImage, TRUE); // マジックナンバー使用中
+	DrawGraph(themeImageArea.x, themeImageArea.y, hRecvImage, TRUE);
 	Pen::Draw();
 	Pen::DrawChangePenWidth(lineWidth);
 	// これまでに描いた線を描画
@@ -247,7 +247,7 @@ void Player::UpdateTheme()
 
 void Player::DrawTheme()
 {
-	DrawGraph(canvasImageArea.x, canvasImageArea.y, hSendImage, TRUE);
+	DrawGraph(canvasImageArea.x, canvasImageArea.y, hRecvImage, TRUE);
 	Theme::Draw();
 }
 
