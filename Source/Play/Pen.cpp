@@ -67,7 +67,7 @@ void Pen::Init()
 	DrawPalette(radius, center);
 
 	// 現在の色の表示
-	DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, Color::GetColorMYRGB(penRGB), TRUE);
+	DrawCircle(currentColorCircle.x, currentColorCircle.y, (int)CURRENT_COLOR_CIRCLE_R, Color::GetColorMYRGB(penRGB), TRUE);
 	Image::MakeImage(changeColorImageArea, &hColorPaletteImage);
 }
 
@@ -123,7 +123,7 @@ void Pen::ChangeColor(int* color)
 		point center = { colorPalette.leftTop.x + radius, colorPalette.leftTop.y + radius };
 
 		// カラーパレットとマウスの距離が一定以内の場合
-		if (Area::CheckPointDistance(center, pMouse, radius) == true)
+		if (Area::CheckPointDistance(center, pMouse, (float)radius) == true)
 		{
 			penHSV.h = (float)(atan2((pMouse.y - center.y), (pMouse.x - center.x)) * 180.0f / DX_PI) + HUE_OFFSET;
 			if (penHSV.h < 0)

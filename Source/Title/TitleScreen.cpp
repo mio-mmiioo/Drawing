@@ -4,6 +4,7 @@
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
 #include "../Data.h"
+#include "../Scene.h"
 
 namespace TitleScreen
 {
@@ -12,6 +13,9 @@ namespace TitleScreen
 	button rule; // ルール確認ボタン
 
 	point mouse; // マウス
+	PACKET sendData;
+
+	int roomNumber; // 部屋番号
 }
 
 
@@ -20,6 +24,9 @@ void TitleScreen::Init()
 	makeRoom = { Data::areaList["b-MakeRoom"], Data::areaList["c-MakeRoom"], false};
 	enterRoom = { Data::areaList["b-EnterRoom"], Data::areaList["c-EnterRoom"], false };
 	rule = { Data::areaList["b-Rule"], Data::areaList["c-Rule"], false };
+
+	sendData = { "", "", -1 }; // ここ気に食わない
+	roomNumber = 0000;
 }
 
 void TitleScreen::Update()
@@ -30,6 +37,29 @@ void TitleScreen::Update()
 		Area::IsClickArea(makeRoom.bArea, mouse, &makeRoom.isClickArea);
 		Area::IsClickArea(enterRoom.bArea, mouse, &enterRoom.isClickArea);
 		Area::IsClickArea(rule.bArea, mouse, &rule.isClickArea);
+	}
+
+	// 部屋立ち上げ、入室のいずれかのボタンが押された場合、サーバーにデータを送る
+	{
+		if (makeRoom.isClickArea == true)
+		{
+			const char dataType[] = "MAKE_ROOM";
+			strncpy_s(sendData.dataType, sizeof(sendData.dataType), dataType, _TRUNCATE);
+			sendData.hImage = roomNumber;
+			Data::GetClient()->SetClient(sendData);
+			Data::GetClient()->SendData();
+			SceneMaster::ChangeScene("MATCHING");
+
+		}
+		if (enterRoom.isClickArea == true)
+		{
+			const char dataType[] = "ENTER_ROOM";
+			strncpy_s(sendData.dataType, sizeof(sendData.dataType), dataType, _TRUNCATE);
+			sendData.hImage = roomNumber;
+			Data::GetClient()->SetClient(sendData);
+			Data::GetClient()->SendData();
+			SceneMaster::ChangeScene("MATCHING");
+		}
 	}
 }
 

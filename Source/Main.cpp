@@ -1,4 +1,3 @@
-#define WIN32_LEAN_AND_MEAN
 #include "DxLib.h"
 #include "Scene.h"
 #include "Screen.h"
@@ -38,6 +37,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Input::InitActionMap();
 	Time::Init();
 	Data::Init();
+
+	if (Data::GetClient() == nullptr)
+	{
+		int i = 0;
+		i++;
+	}
+
 	SceneMaster::CreateFirst(); // Å‰‚ÌƒV[ƒ“‚ğì¬
 
 	while (1)

@@ -15,15 +15,29 @@ namespace Data
 		IMAGE,
 		BUTTON
 	};
+
+	const std::string SERVER_IPADDRESS = "127.0.0.1";   // サーバーのIPアドレス
+	const unsigned short SERVER_PORT = 8888;            // サーバーのポート番号
+
 	void ReadData();
 
 	std::map<std::string, area> areaList;
 	std::map<std::string, button> buttonList;
+
+	Client* client;
 }
 
 void Data::Init()
 {
 	ReadData();
+
+	client = new Client(SERVER_IPADDRESS, SERVER_PORT);
+	client->Init();
+}
+
+Client* Data::GetClient()
+{
+	return client;
 }
 
 void Data::ReadData()

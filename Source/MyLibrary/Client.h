@@ -26,7 +26,7 @@ public:
 	int Init();		// 初期化処理
 
 	void SetClient(PACKET client) { data_.client = client; }	// クライアント自身に情報をセットする
-	PACKET GetClient() { return data_.client; }					// クライアント自身の情報の取得
+	PACKET GetData() { return data_.client; }					// クライアント自身の情報の取得
 	std::vector<PACKET> GetReciveData() { return data_.recv; }	// サーバーから受け取ったデータの取得
 
 	void SendData();	// データの送信

@@ -4,17 +4,12 @@
 #include "../MyLibrary/Time.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
-#include "../MyLibrary/Client.h"
+//#include "../MyLibrary/Client.h"
 #include "Theme.h"
 #include "Pen.h"
 #include "Area.h"
 #include "../Data.h"
 #include <vector>
-
-// 一時的にこの場所に書いている
-const std::string SERVER_IPADDRESS = "127.0.0.1";   // サーバーのIPアドレス
-const unsigned short SERVER_PORT = 8888;            // サーバーのポート番号
-
 
 namespace Player
 {
@@ -58,7 +53,7 @@ namespace Player
 	int hRecvImage; // 受信データ
 
 
-	Client* client; // サーバーとやり取りをするためのクライアントクラス
+	//Client* client; // サーバーとやり取りをするためのクライアントクラス
 
 }
 
@@ -81,9 +76,6 @@ void Player::Init()
 	Pen::Init();
 	Theme::Init();
 	Pen::SetColor(&penRGB);
-
-	client = new Client(SERVER_IPADDRESS, SERVER_PORT);
-	client->Init();
 }
 
 void Player::Update()
@@ -128,8 +120,8 @@ void Player::Update()
 			nextPhase = PHASE::DRAWING;
 		}
 		phase = WAITE;
-		client->SetClient(PACKET({ "Image", "", hSendImage})); // サーバーに送るデータをセット
-		client->SendData();
+		Data::GetClient()->SetClient(PACKET({"Image", "", hSendImage})); // サーバーに送るデータをセット
+		Data::GetClient()->SendData();
 	}
 }
 
@@ -254,8 +246,8 @@ void Player::DrawTheme()
 void Player::UpdateWaite()
 {
 	// ここで通信待ちの処理、データの受け取りなどする
-	client->ReceiveData();
-	hRecvImage = client->GetClient().hImage;
+	Data::GetClient()->ReceiveData();
+	hRecvImage = Data::GetClient()->GetData().hImage;
 	if (hRecvImage > 0)
 	{
 		phase = nextPhase;
