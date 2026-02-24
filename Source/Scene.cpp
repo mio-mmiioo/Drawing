@@ -3,6 +3,7 @@
 
 // äeÉVÅ[Éì
 #include "Title/TitleScene.h"
+#include "Matching/MatchingScene.h"
 #include "Play/PlayScene.h"
 #include "Result/ResultScene.h"
 
@@ -24,6 +25,10 @@ void SceneMaster::ChangeScene(const std::string& name)
 	if (name == "TITLE")
 	{
 		current = new TitleScene();
+	}
+	else if (name == "MATCHING")
+	{
+		current = new MatchingScene();
 	}
 	else if (name == "PLAY")
 	{

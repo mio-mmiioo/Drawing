@@ -128,7 +128,7 @@ void Player::Update()
 			nextPhase = PHASE::DRAWING;
 		}
 		phase = WAITE;
-		client->SetClient(PACKET({ hSendImage })); // サーバーに送るデータをセット
+		client->SetClient(PACKET({ "Image", "", hSendImage})); // サーバーに送るデータをセット
 		client->SendData();
 	}
 }
@@ -233,8 +233,8 @@ void Player::DrawDrawing()
 				nextY = drawLine[l][p + 1].y;
 
 				// 線or丸のみだと、不自然な描画になってしまうため、どちらも描画
-				DrawLine(x, y, nextX, nextY, c, lineW);
-				DrawCircle(x, y, lineW / 2, c, TRUE);
+				DrawLine(x, y, nextX, nextY, c, (int)lineW);
+				DrawCircle(x, y, (int)(lineW / 2), c, TRUE);
 			}
 		}
 	}

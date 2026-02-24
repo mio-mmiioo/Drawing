@@ -1,21 +1,39 @@
 #pragma once
-#include "DxLib.h"
+#include <WinSock2.h>
+#include <vector>
+#include <string>
+#include <map>
+
+// 受信したデータの種類
+enum PACKET_DATA_TYPE
+{
+    MAKE_ROOM,		// 部屋立ち上げ
+    ENTER_ROOM,		// 入室
+    END_MAKE_ROOM,	// 部屋作成完了
+    REGISTER_NAME,	// 名前の登録
+    MAX_PACKET_TYPE
+};
 
 // 受信したいデータの中身
-static struct PACKET
+struct PACKET
 {
+    char dataType[256];
+    char playerName[256];
     int hImage;
 };
 
-// バイトオーダーを変換する関数
-// PACKET内を書き換えたら書き換える必要がある
-// ※本当はサイズを確認しから変換するべき
-static PACKET ByteSwapMyData(PACKET data)
+namespace Packet
 {
-    PACKET ret;
-    ret.hImage = htonl(data.hImage);
+    void Init(); // 初期化 Serverと同じ
 
-    return ret;
+    // バイトオーダーを変換する関数
+    // PACKET内を書き換えたら書き換える必要がある
+    // ※本当はサイズを確認しから変換するべき
+    PACKET ByteSwapMyData(PACKET data);
+
+
+    extern std::map<std::string, PACKET_DATA_TYPE> dataName;	// データの名前, データの種類
+    extern std::vector<std::string> playerName;					// プレイヤーの名前
+
 }
 
-static PACKET INIT = { -1 }; // 初期データ

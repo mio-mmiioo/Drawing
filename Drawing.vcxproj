@@ -148,10 +148,12 @@
     <ClCompile Include="Source\Data.cpp" />
     <ClCompile Include="Source\Image.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Matching\MatchingScene.cpp" />
     <ClCompile Include="Source\MyLibrary\Client.cpp" />
     <ClCompile Include="Source\MyLibrary\Color.cpp" />
     <ClCompile Include="Source\MyLibrary\CsvReader.cpp" />
     <ClCompile Include="Source\MyLibrary\Input.cpp" />
+    <ClCompile Include="Source\MyLibrary\Packet.cpp" />
     <ClCompile Include="Source\MyLibrary\Time.cpp" />
     <ClCompile Include="Source\Play\Area.cpp" />
     <ClCompile Include="Source\Play\Pen.cpp" />
@@ -177,6 +179,7 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\Data.h" />
     <ClInclude Include="Source\Image.h" />
+    <ClInclude Include="Source\Matching\MatchingScene.h" />
     <ClInclude Include="Source\MyLibrary\Client.h" />
     <ClInclude Include="Source\MyLibrary\Color.h" />
     <ClInclude Include="Source\MyLibrary\CsvReader.h" />

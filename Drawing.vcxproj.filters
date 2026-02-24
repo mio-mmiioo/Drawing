@@ -16,6 +16,9 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{5488084d-24c6-426d-bf55-b38e685120a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Matching">
+      <UniqueIdentifier>{c539bb0e-343c-4f88-8c10-a2131d560155}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp" />
@@ -86,6 +89,12 @@
       <Filter>MyLibrary</Filter>
     </ClCompile>
     <ClCompile Include="Source\MyLibrary\Client.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Matching\MatchingScene.cpp">
+      <Filter>Matching</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Packet.cpp">
       <Filter>MyLibrary</Filter>
     </ClCompile>
   </ItemGroup>
@@ -168,6 +177,9 @@
     </ClInclude>
     <ClInclude Include="Source\MyLibrary\Packet.h">
       <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Matching\MatchingScene.h">
+      <Filter>Matching</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

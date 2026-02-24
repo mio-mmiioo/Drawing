@@ -15,7 +15,7 @@ Client::Client(std::string serverIPAddress, int portNumber)
 {
 	serverIPAddress_ = serverIPAddress;
 	portNumber_ = portNumber;
-	data_.client = INIT;
+	data_.client = { "", "", -1 };
 }
 
 Client::~Client()
@@ -62,7 +62,7 @@ int Client::Init()
 void Client::SendData()
 {
 	// サーバに送信する構造体をネットワークバイトオーダーで作成
-	data_.tmp = ByteSwapMyData(data_.client);
+	data_.tmp = Packet::ByteSwapMyData(data_.client);
 	send(sock_, (char*)&data_.tmp, sizeof(data_.tmp), 0); // サーバーにデータを送信
 }
 
@@ -74,7 +74,7 @@ void Client::ReceiveData()
 		int ret = recv(sock_, (char*)&(data_.tmp), sizeof(data_.tmp), 0);
 		if (ret > 0)
 		{
-			data_.recv.push_back(ByteSwapMyData(data_.tmp)); // データがある場合、受け取ったデータとして配列に追加する
+			data_.recv.push_back(Packet::ByteSwapMyData(data_.tmp)); // データがある場合、受け取ったデータとして配列に追加する
 		}
 		else
 		{

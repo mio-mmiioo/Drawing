@@ -19,7 +19,7 @@ void TitleScene::Update()
 	TitleScreen::Update();
 	if (Input::IsKeyDown("nextScene"))
 	{
-		SceneMaster::ChangeScene("PLAY");
+		SceneMaster::ChangeScene("MATCHING");
 	}
 }
 
