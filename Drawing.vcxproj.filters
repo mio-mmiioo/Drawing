@@ -97,6 +97,9 @@
     <ClCompile Include="Source\MyLibrary\Packet.cpp">
       <Filter>MyLibrary</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Matching\MatchingScreen.cpp">
+      <Filter>Matching</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h" />
@@ -179,6 +182,9 @@
       <Filter>MyLibrary</Filter>
     </ClInclude>
     <ClInclude Include="Source\Matching\MatchingScene.h">
+      <Filter>Matching</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Matching\MatchingScreen.h">
       <Filter>Matching</Filter>
     </ClInclude>
   </ItemGroup>

@@ -45,6 +45,7 @@ void Input::InitActionMap()
     inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_P} }; // 次のシーンに遷移する
     inputActionMap["exit"] = { {InputType::keyboard, KEY_INPUT_ESCAPE} }; // プログラムを終了する
     inputActionMap["makeImage"] = { {InputType::keyboard, KEY_INPUT_I} }; // 画像を作成する
+    inputActionMap["endMatching"] = { {InputType::keyboard, KEY_INPUT_E} }; // 部屋立ち上げを終了する 
 }
 
 void Input::StateUpdate()

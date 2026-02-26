@@ -33,6 +33,18 @@ void Data::Init()
 
 	client = new Client(SERVER_IPADDRESS, SERVER_PORT);
 	client->Init();
+
+	portNumber = 8888;
+}
+
+void Data::SendData(std::string message, int number)
+{
+	PACKET sendData;
+	const char* dataType = message.c_str();
+	strncpy_s(sendData.dataType, sizeof(sendData.dataType), message.c_str(), _TRUNCATE);
+	sendData.hImage = number;
+	client->SetClient(sendData);
+	client->SendData();
 }
 
 Client* Data::GetClient()

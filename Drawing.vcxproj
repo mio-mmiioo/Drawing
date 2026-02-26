@@ -149,6 +149,7 @@
     <ClCompile Include="Source\Image.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Matching\MatchingScene.cpp" />
+    <ClCompile Include="Source\Matching\MatchingScreen.cpp" />
     <ClCompile Include="Source\MyLibrary\Client.cpp" />
     <ClCompile Include="Source\MyLibrary\Color.cpp" />
     <ClCompile Include="Source\MyLibrary\CsvReader.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Source\Data.h" />
     <ClInclude Include="Source\Image.h" />
     <ClInclude Include="Source\Matching\MatchingScene.h" />
+    <ClInclude Include="Source\Matching\MatchingScreen.h" />
     <ClInclude Include="Source\MyLibrary\Client.h" />
     <ClInclude Include="Source\MyLibrary\Color.h" />
     <ClInclude Include="Source\MyLibrary\CsvReader.h" />

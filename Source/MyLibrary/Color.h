@@ -35,6 +35,9 @@ namespace Color
 	const int ENTER_ROOM = GetColor(100, 200, 100);
 	const int RULE = GetColor(100, 200, 100);
 
+	// MatchingScreen
+	const int END_MAKE_ROOM = GetColor(100, 200, 100);
+
 	// Player‚ÅŽg—p
 	const int LINE = RED;
 	const int ERASER = WHITE;
