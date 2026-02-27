@@ -120,7 +120,7 @@ void Player::Update()
 			nextPhase = PHASE::DRAWING;
 		}
 		phase = WAITE;
-		Data::GetClient()->SetClient(PACKET({"Image", "", hSendImage})); // サーバーに送るデータをセット
+		//Data::GetClient()->SetClient(PACKET({"Image", Data::clientName.c_str(), hSendImage})); // サーバーに送るデータをセット
 		Data::GetClient()->SendData();
 	}
 }

@@ -25,6 +25,7 @@ void TitleScreen::Init()
 
 void TitleScreen::Update()
 {
+	Data::GetClient()->ReceiveData();
 	GetMousePoint(&mouse.x, &mouse.y);
 	if (Input::IsKeyDown("ok"))
 	{
@@ -39,14 +40,19 @@ void TitleScreen::Update()
 		if (makeRoom.isClickArea == true)
 		{
 			message = "MAKE_ROOM";
-			Data::SendData(message, Data::portNumber);
-			SceneMaster::ChangeScene("MATCHING");
+			Data::SendData(message, Data::roomNumber);
 		}
 		if (enterRoom.isClickArea == true)
 		{
 			message = "ENTER_ROOM";
-			Data::SendData(message, Data::portNumber);
+			Data::SendData(message, Data::roomNumber);
+		}
+
+		PACKET recvData = Data::GetClient()->GetReciveData();
+		if (Data::isStartMatching() == true)
+		{
 			SceneMaster::ChangeScene("MATCHING");
+			WaitTimer(50);
 		}
 	}
 }

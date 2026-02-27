@@ -37,6 +37,7 @@ namespace Color
 
 	// MatchingScreen
 	const int END_MAKE_ROOM = GetColor(100, 200, 100);
+	const int CHANGE_NAME = GetColor(100, 200, 100);
 
 	// Player‚ÅŽg—p
 	const int LINE = RED;

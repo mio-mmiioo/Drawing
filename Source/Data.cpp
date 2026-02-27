@@ -34,16 +34,14 @@ void Data::Init()
 	client = new Client(SERVER_IPADDRESS, SERVER_PORT);
 	client->Init();
 
-	portNumber = SERVER_PORT;
+	roomNumber = SERVER_PORT;
 }
 
 void Data::SendData(std::string message, int number)
 {
 	PACKET sendData;
-	const char* dataType = message.c_str();
 	strncpy_s(sendData.dataType, sizeof(sendData.dataType), message.c_str(), _TRUNCATE);
 	sendData.number = number;
-	const char* playerName = clientName.c_str();
 	strncpy_s(sendData.playerName, sizeof(sendData.playerName), clientName.c_str(), _TRUNCATE);
 	client->SetClient(sendData);
 	client->SendData();
@@ -54,6 +52,20 @@ bool Data::isStartPlay()
 	std::string dataType = client->GetReciveData().dataType;
 	if (dataType == "START_PLAY")
 	{
+		return true;
+	}
+	return false;
+}
+
+bool Data::isStartMatching()
+{
+	std::string dataType = client->GetReciveData().dataType;
+	if (dataType == "START_MATCHING")
+	{
+		clientName = client->GetReciveData().playerName;
+		PACKET clientData = client->GetData();
+		strncpy_s(clientData.playerName, sizeof(clientData.playerName), clientName.c_str(), _TRUNCATE);
+		client->SetClient(clientData);
 		return true;
 	}
 	return false;

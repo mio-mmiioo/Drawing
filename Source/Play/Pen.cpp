@@ -150,7 +150,7 @@ void Pen::ChangeColor(int* color)
 		*color = Color::GetColorMYRGB(penRGB);
 
 		// 現在の色の表示
-		DrawCircle(currentColorCircle.x, currentColorCircle.y, CURRENT_COLOR_CIRCLE_R, *color, TRUE);
+		DrawCircle(currentColorCircle.x, currentColorCircle.y, (int)CURRENT_COLOR_CIRCLE_R, *color, TRUE);
 		DrawPalette(radius, center);
 		Image::MakeImage(changeColorImageArea, &hColorPaletteImage); // 画像として保存する ※毎回描画すると処理が重くなる可能性があるため
 	}
@@ -190,8 +190,8 @@ void Pen::DrawChangePenWidth(float lineWidth)
 	{
 		point p1 = WIDTH_LINE_TOP;
 		point p2 = WIDTH_LINE_DOWN;
-		DrawLine(p1.x, p1.y, p2.x, p2.y, Color::WIDTH_LINE, WIDTH_LINE_WIDTH);
-		DrawCircle(p1.x, p1.y + (lineWidth - MIN_PEN_WIDTH) * PEN_BASE_SIZE, lineWidth / 2, Color::PEN_CIRCLE, TRUE);
+		DrawLine(p1.x, p1.y, p2.x, p2.y, Color::WIDTH_LINE, (int)WIDTH_LINE_WIDTH);
+		DrawCircle(p1.x, p1.y + (lineWidth - MIN_PEN_WIDTH) * PEN_BASE_SIZE, (int)(lineWidth / 2), Color::PEN_CIRCLE, TRUE);
 	}
 }
 

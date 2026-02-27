@@ -32,14 +32,15 @@ void Area::IsClickArea(area a, point p, bool* isClickArea)
 
 	if (IsInArea(a, p) == true)
 	{
-		if (*isClickArea == true)
-		{
-			*isClickArea = false;
-		}
-		else
-		{
-			*isClickArea = true;
-		}
+		*isClickArea = !(*isClickArea);
+		//if (*isClickArea == true)
+		//{
+		//	*isClickArea = false;
+		//}
+		//else
+		//{
+		//	*isClickArea = true;
+		//}
 	}
 }
 
