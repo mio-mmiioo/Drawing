@@ -11,6 +11,7 @@ enum PACKET_DATA_TYPE
     ENTER_ROOM,		// 入室
     END_MAKE_ROOM,	// 部屋作成完了
     REGISTER_NAME,	// 名前の登録
+    START_PLAY,     // プレイ画面開始
     MAX_PACKET_TYPE
 };
 
@@ -19,7 +20,7 @@ struct PACKET
 {
     char dataType[256];
     char playerName[256];
-    int hImage;
+    int number;
 };
 
 namespace Packet

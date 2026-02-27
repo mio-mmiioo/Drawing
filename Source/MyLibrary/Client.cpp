@@ -68,19 +68,19 @@ void Client::SendData()
 
 void Client::ReceiveData()
 {
-	data_.recv.clear(); // 前回のデータを削除
-	while (true)
+	int ret = recv(sock_, (char*)&(data_.tmp), sizeof(data_.tmp), 0);
+	if (ret > 0)
 	{
-		int ret = recv(sock_, (char*)&(data_.tmp), sizeof(data_.tmp), 0);
-		if (ret > 0)
-		{
-			data_.recv.push_back(Packet::ByteSwapMyData(data_.tmp)); // データがある場合、受け取ったデータとして配列に追加する
-		}
-		else
-		{
-			// データがない場合ループを抜ける
-			// エラー処理を追加したい場合ここ
-			break;
-		}
+		data_.recv = Packet::ByteSwapMyData(data_.tmp); // データがある場合、代入
 	}
+	else
+	{
+		if (WSAGetLastError() == 10035)
+		{
+			return;
+		}
+		int e = WSAGetLastError();
+		printfDx("%d\n", e);
+	}
+
 }

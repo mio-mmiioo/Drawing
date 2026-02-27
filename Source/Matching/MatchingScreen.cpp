@@ -5,6 +5,9 @@
 #include "../Data.h"
 #include "../Scene.h"
 
+#include "DxLib.h"
+
+
 namespace MatchingScreen
 {
 	int hImage;
@@ -22,6 +25,10 @@ void MatchingScreen::Init()
 
 void MatchingScreen::Update()
 {
+	Data::GetClient()->ReceiveData();
+
+	//printfDx(Data::GetClient()->GetReciveData().dataType);
+	//printfDx("\n");
 	GetMousePoint(&mouse.x, &mouse.y);
 	if (Input::IsKeyDown("ok"))
 	{
@@ -31,6 +38,11 @@ void MatchingScreen::Update()
 	if (endMakeRoom.isClickArea == true)
 	{
 		Data::SendData("END_MAKE_ROOM", Data::portNumber); // サーバーに報告
+		
+	}
+
+	if (Data::isStartPlay() == true)
+	{
 		SceneMaster::ChangeScene("PLAY"); // 画面遷移
 	}
 }

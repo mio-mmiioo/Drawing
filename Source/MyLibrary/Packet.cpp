@@ -12,6 +12,7 @@ void Packet::Init()
 	dataName["ENTER_ROOM"] = PACKET_DATA_TYPE::ENTER_ROOM;
 	dataName["END_MAKE_ROOM"] = PACKET_DATA_TYPE::END_MAKE_ROOM;
 	dataName["REGISTER_NAME"] = PACKET_DATA_TYPE::REGISTER_NAME;
+	dataName["START_PLAY"] = PACKET_DATA_TYPE::START_PLAY;
 }
 
 PACKET Packet::ByteSwapMyData(PACKET data)
@@ -19,7 +20,7 @@ PACKET Packet::ByteSwapMyData(PACKET data)
 	PACKET ret;
 	memcpy(ret.dataType, data.dataType, sizeof(ret.dataType));
 	memcpy(ret.playerName, data.playerName, sizeof(ret.playerName));
-	ret.hImage = htonl(data.hImage);
+	ret.number= htonl(data.number);
 	
 	return ret;
 }

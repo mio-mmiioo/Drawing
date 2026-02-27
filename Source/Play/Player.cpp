@@ -247,7 +247,7 @@ void Player::UpdateWaite()
 {
 	// ここで通信待ちの処理、データの受け取りなどする
 	Data::GetClient()->ReceiveData();
-	hRecvImage = Data::GetClient()->GetData().hImage;
+	hRecvImage = Data::GetClient()->GetData().number;
 	if (hRecvImage > 0)
 	{
 		phase = nextPhase;

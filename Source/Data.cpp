@@ -34,7 +34,7 @@ void Data::Init()
 	client = new Client(SERVER_IPADDRESS, SERVER_PORT);
 	client->Init();
 
-	portNumber = 8888;
+	portNumber = SERVER_PORT;
 }
 
 void Data::SendData(std::string message, int number)
@@ -42,9 +42,21 @@ void Data::SendData(std::string message, int number)
 	PACKET sendData;
 	const char* dataType = message.c_str();
 	strncpy_s(sendData.dataType, sizeof(sendData.dataType), message.c_str(), _TRUNCATE);
-	sendData.hImage = number;
+	sendData.number = number;
+	const char* playerName = clientName.c_str();
+	strncpy_s(sendData.playerName, sizeof(sendData.playerName), clientName.c_str(), _TRUNCATE);
 	client->SetClient(sendData);
 	client->SendData();
+}
+
+bool Data::isStartPlay()
+{
+	std::string dataType = client->GetReciveData().dataType;
+	if (dataType == "START_PLAY")
+	{
+		return true;
+	}
+	return false;
 }
 
 Client* Data::GetClient()
