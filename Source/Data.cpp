@@ -31,7 +31,7 @@ namespace Data
 void Data::Init()
 {
 	ReadData();
-
+	Packet::Init();
 	client = new Client(SERVER_IPADDRESS, SERVER_PORT);
 	client->Init();
 

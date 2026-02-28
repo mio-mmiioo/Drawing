@@ -4,12 +4,12 @@
 #include "../MyLibrary/Time.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
-//#include "../MyLibrary/Client.h"
 #include "Theme.h"
 #include "Pen.h"
 #include "Area.h"
 #include "../Data.h"
 #include <vector>
+#include "../Scene.h"
 
 namespace Player
 {
@@ -45,6 +45,8 @@ namespace Player
 
 	PHASE phase;		// 状態を管理する
 	PHASE nextPhase;	// 次の状態
+	int phaseCount;		// 人数によって回数を変える
+
 	float timer;		// 時間を管理するための変数
 	int penRGB;			// ペンの色
 
@@ -52,8 +54,6 @@ namespace Player
 	int hSendImage; // 送信データ
 	int hRecvImage; // 受信データ
 
-
-	//Client* client; // サーバーとやり取りをするためのクライアントクラス
 
 }
 
@@ -120,7 +120,7 @@ void Player::Update()
 			nextPhase = PHASE::DRAWING;
 		}
 		phase = WAITE;
-		Data::SendData("Image", hSendImage);
+		Data::SendData("SEND_IMAGE", hSendImage);
 	}
 }
 
@@ -246,11 +246,18 @@ void Player::UpdateWaite()
 {
 	// ここで通信待ちの処理、データの受け取りなどする
 	Data::GetClient()->ReceiveData();
-	hRecvImage = Data::GetClient()->GetData().number;
-	if (hRecvImage > 0)
+	PACKET recv = Data::GetClient()->GetReciveData();
+	if (Packet::dataName[recv.dataType] == START_GAME)
 	{
+		hRecvImage = recv.number; // 画像をセット
 		phase = nextPhase;
 	}
+	else if (Packet::dataName[recv.dataType] == START_RESULT)
+	{
+		SceneMaster::ChangeScene("RESULT"); // 画面遷移
+	}
+
+	Data::SendData("STOP_GAME", -1);
 }
 
 void Player::DrawWaite()
