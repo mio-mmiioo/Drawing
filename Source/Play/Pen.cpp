@@ -74,10 +74,9 @@ void Pen::Init()
 void Pen::Draw()
 {
 	Area::DrawArea(canvas, Color::CANVAS);
-	Area::DrawArea(changeColor.bArea, Color::B_COLOR);
-	Area::DrawArea(eraser.bArea, Color::B_ERASER);
-	Area::DrawArea(changeWidth.bArea, Color::B_WIDTH);
-
+	Area::DrawButton2(changeColor, Color::B_COLOR);
+	Area::DrawButton2(eraser, Color::B_ERASER);
+	Area::DrawButton2(changeWidth, Color::B_WIDTH);
 	// 色パレットの描画
 	if (changeColor.isClickArea == true)
 	{

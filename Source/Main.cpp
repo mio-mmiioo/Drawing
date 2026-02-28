@@ -3,6 +3,7 @@
 #include "Screen.h"
 #include "MyLibrary/Input.h"
 #include "MyLibrary/Time.h"
+#include "Image.h"
 #include "Data.h"
 #include "../ImGui/imgui_impl_dxlib.hpp"
 
@@ -36,7 +37,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ÇªÇÃëºÇÃèâä˙âª
 	Input::InitActionMap();
 	Time::Init();
+	Image::Init();
 	Data::Init();
+
 
 	if (Data::GetClient() == nullptr)
 	{

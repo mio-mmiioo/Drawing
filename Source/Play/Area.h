@@ -12,6 +12,8 @@ struct area
 {
 	point leftTop; // 左上の座標
 	point rightDown; // 右下の座標
+	int hImage; // 画像
+	int color;	// 色
 };
 
 struct button

@@ -33,14 +33,6 @@ void Area::IsClickArea(area a, point p, bool* isClickArea)
 	if (IsInArea(a, p) == true)
 	{
 		*isClickArea = !(*isClickArea);
-		//if (*isClickArea == true)
-		//{
-		//	*isClickArea = false;
-		//}
-		//else
-		//{
-		//	*isClickArea = true;
-		//}
 	}
 }
 
@@ -50,7 +42,14 @@ void Area::DrawArea(area a, int buttonColor)
 	int y1 = a.leftTop.y;
 	int x2 = a.rightDown.x;
 	int y2 = a.rightDown.y;
-	DrawBox(x1, y1, x2, y2, buttonColor, TRUE);
+	if (a.hImage == -1)
+	{
+		DrawBox(x1, y1, x2, y2, buttonColor, TRUE);
+	}
+	else
+	{
+		DrawExtendGraph(x1, y1, x2, y2, a.hImage, TRUE);
+	}
 }
 
 void Area::DrawButton1(button b, int color)
