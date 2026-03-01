@@ -3,12 +3,12 @@ b-MakeRoom,nullptr,200,500,300,550,FALSE,TRUE,TRUE,部屋立ち上げボタン
 c-MakeRoom,b-MakeRoom,190,490,310,560,FALSE,TRUE,FALSE,部屋立ち上げボタンが押されたときに表示されるエリア
 b-EnterRoom,nullptr,400,500,500,550,FALSE,TRUE,TRUE,入室ボタン
 c-EnterRoom,b-EnterRoom,390,490,510,560,FALSE,TRUE,FALSE,入室ボタンが押されたときに表示されるエリア
-b-ChangeName,nullptr,200,300,300,350,TRUE,FALSE,TRUE,名前変更ボタン
-c-ChangeName,b-ChangeName,190,290,310,360,TRUE,FALSE,FALSE,名前変更ボタンが押されたときに表示されるエリア
-b-EndMakeRoom,nullptr,400,300,500,350,FALSE,FALSE,TRUE,部屋立ち上げ完了ボタン
-c-EndMakeRoom,b-EndMakeRoom,390,290,510,360,FALSE,FALSE,FALSE,部屋立ち上げ完了ボタンが押されたときに表示されるエリア
+b-ChangeName,nullptr,200,300,300,350,TRUE,TRUE,TRUE,名前変更ボタン
+c-ChangeName,b-ChangeName,190,290,310,360,TRUE,TRUE,FALSE,名前変更ボタンが押されたときに表示されるエリア
+b-EndMakeRoom,nullptr,400,300,500,350,FALSE,TRUE,TRUE,部屋立ち上げ完了ボタン
+c-EndMakeRoom,b-EndMakeRoom,390,290,510,360,FALSE,TRUE,FALSE,部屋立ち上げ完了ボタンが押されたときに表示されるエリア
 b-Rule,nullptr,900,50,950,100,TRUE,FALSE,TRUE,ルール説明ボタン
-c-Rule,b-Rule,100,50,900,650,FALSE,FALSE,FALSE,ルールが表示される
+c-Rule,b-Rule,100,50,900,650,FALSE,TRUE,FALSE,ルールが表示される
 Canvas,nullptr,50,50,650,550,TRUE,FALSE,FALSE,絵が描ける範囲
 b-Eraser,nullptr,800,200,820,220,FALSE,TRUE,TRUE,消しゴムボタン
 c-Eraser,b-Eraser,800,200,820,220,TRUE,TRUE,FALSE,消しゴム使用可能状態

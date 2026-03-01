@@ -13,6 +13,10 @@ void Image::Init()
 	hImage["c-EnterRoom"] = LoadGraph("data/image/c-EnterRoom.png");
 	hImage["b-MakeRoom"] = LoadGraph("data/image/b-MakeRoom.png");
 	hImage["c-MakeRoom"] = LoadGraph("data/image/c-MakeRoom.png");
+	hImage["b-ChangeName"] = LoadGraph("data/image/b-ChangeName.png");
+	hImage["c-ChangeName"] = LoadGraph("data/image/c-ChangeName.png");
+	hImage["b-EndMakeRoom"] = LoadGraph("data/image/b-EndMakeRoom.png");
+	hImage["c-EndMakeRoom"] = LoadGraph("data/image/c-EndMakeRoom.png");
 	hImage["b-Eraser"] = LoadGraph("data/image/b-Eraser.png");
 	hImage["c-Eraser"] = LoadGraph("data/image/c-Eraser.png");
 	hImage["b-ChangeWidth"] = LoadGraph("data/image/b-ChangeWidth.png");
