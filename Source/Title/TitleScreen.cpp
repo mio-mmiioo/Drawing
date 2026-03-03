@@ -48,11 +48,9 @@ void TitleScreen::Update()
 			Data::SendData(message, Data::roomNumber);
 		}
 
-		PACKET recvData = Data::GetClient()->GetReciveData();
 		if (Data::isStartMatching() == true)
 		{
 			SceneMaster::ChangeScene("MATCHING");
-			WaitTimer(50);
 		}
 	}
 }
