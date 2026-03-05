@@ -30,12 +30,12 @@ namespace Color
 	// テキストカラー
 	const int TEXT = WHITE;
 
-	// TitleScreen
+	// TitleScreenで使用
 	const int MAKE_ROOM = GetColor(100, 200, 100);
 	const int ENTER_ROOM = GetColor(100, 200, 100);
 	const int RULE = GetColor(100, 200, 100);
 
-	// MatchingScreen
+	// MatchingScreenで使用
 	const int END_MAKE_ROOM = GetColor(100, 200, 100);
 	const int CHANGE_NAME = GetColor(100, 200, 100);
 

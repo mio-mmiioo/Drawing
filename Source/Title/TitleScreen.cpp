@@ -29,9 +29,9 @@ void TitleScreen::Update()
 	GetMousePoint(&mouse.x, &mouse.y);
 	if (Input::IsKeyDown("ok"))
 	{
-		Area::IsClickArea(makeRoom.bArea, mouse, &makeRoom.isClickArea);
-		Area::IsClickArea(enterRoom.bArea, mouse, &enterRoom.isClickArea);
-		Area::IsClickArea(rule.bArea, mouse, &rule.isClickArea);
+		Area::SetClickArea(makeRoom.bArea, mouse, &makeRoom.isClickArea);
+		Area::SetClickArea(enterRoom.bArea, mouse, &enterRoom.isClickArea);
+		Area::SetClickArea(rule.bArea, mouse, &rule.isClickArea);
 	}
 
 	// 部屋立ち上げ、入室のいずれかのボタンが押された場合、サーバーにデータを送る

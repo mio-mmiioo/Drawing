@@ -23,7 +23,7 @@ bool Area::IsInArea(area a, point p)
 	return false;
 }
 
-void Area::IsClickArea(area a, point p, bool* isClickArea)
+void Area::SetClickArea(area a, point p, bool* isClickArea)
 {
 	if (isClickArea == nullptr)
 	{

@@ -35,9 +35,9 @@ namespace Player
 	void DrawWaite();		// 待ち時間の描画
 	void ImGuiInput();		// ImGuiの処理
 
-	std::vector<std::vector<point>> drawLine; // 線の位置情報
-	std::vector<int> drawLineColor;		// 線の色の情報
-	std::vector<float> drawLineWidth;	// 線の太さの情報
+	std::vector<std::vector<point>> drawLine;	// 線の位置情報
+	std::vector<int> drawLineColor;				// 線の色の情報
+	std::vector<float> drawLineWidth;			// 線の太さの情報
 	int lineCount;		// 絵に描かれている線の数
 	float lineWidth;	// ペンの太さ
 	point mouse;		// マウスの座標
@@ -85,6 +85,7 @@ void Player::Update()
 
 	ImGuiInput();
 
+	// phaseによって更新内容を変更する
 	switch (phase)
 	{
 	case PHASE::THEME:
@@ -170,7 +171,7 @@ void Player::UpdateDrawing()
 	{
 		Pen::Erase(&penRGB);
 	}
-	// 線の太さを変更する 機能の実装はまだ
+	// 線の太さを変更する
 	if (Input::IsKeyDown("changeWidth"))
 	{
 		Pen::ChangeWidth(&lineWidth);

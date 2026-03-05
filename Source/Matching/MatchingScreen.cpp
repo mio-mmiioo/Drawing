@@ -7,17 +7,14 @@
 
 namespace MatchingScreen
 {
-	int hImage;
-
-	button endMakeRoom;
-	button changeName;
+	button endMakeRoom; // ゲーム開始ボタン
+	button changeName;	// 名前変更ボタン
 
 	point mouse;
 }
 
 void MatchingScreen::Init()
 {
-	hImage = 0;
 	endMakeRoom = { Data::areaList["b-EndMakeRoom"], Data::areaList["c-EndMakeRoom"], false };
 	changeName = { Data::areaList["b-ChangeName"], Data::areaList["c-ChangeName"], false };
 }
@@ -29,8 +26,8 @@ void MatchingScreen::Update()
 	GetMousePoint(&mouse.x, &mouse.y);
 	if (Input::IsKeyDown("ok"))
 	{
-		Area::IsClickArea(endMakeRoom.bArea, mouse, &endMakeRoom.isClickArea);
-		Area::IsClickArea(changeName.bArea, mouse, &changeName.isClickArea);
+		Area::SetClickArea(endMakeRoom.bArea, mouse, &endMakeRoom.isClickArea);
+		Area::SetClickArea(changeName.bArea, mouse, &changeName.isClickArea);
 	}
 
 	if (endMakeRoom.isClickArea == true)

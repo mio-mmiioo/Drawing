@@ -15,9 +15,9 @@ void Time::Init()
 	QueryPerformanceFrequency(&frequency);
 	QueryPerformanceCounter(&current);
 
-	HDC hdc = GetDC(GetMainWindowHandle()); // デバイスコンテキストの取得
-	refreshRate = (float)GetDeviceCaps(hdc, VREFRESH); // リフレッシュレートの取得
-	ReleaseDC(GetMainWindowHandle(), hdc); // デバイスコンテキストの解放
+	HDC hdc = GetDC(GetMainWindowHandle());				// デバイスコンテキストの取得
+	refreshRate = (float)GetDeviceCaps(hdc, VREFRESH);	// リフレッシュレートの取得
+	ReleaseDC(GetMainWindowHandle(), hdc);				// デバイスコンテキストの解放
 }
 
 void Time::Update()

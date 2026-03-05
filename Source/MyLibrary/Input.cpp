@@ -33,18 +33,18 @@ void Input::InitActionMap()
 {
     // 入力処理の内容
     
-    inputActionMap["drawing"] = { {InputType::mouse, MOUSE_INPUT_LEFT} }; // 線をかく
-    inputActionMap["back"] = { {InputType::keyboard, KEY_INPUT_Z} }; // 1つ戻る (お絵描き中)
+    inputActionMap["drawing"] = { {InputType::mouse, MOUSE_INPUT_LEFT} };      // 線をかく
+    inputActionMap["back"] = { {InputType::keyboard, KEY_INPUT_Z} };           // 1つ戻る (お絵描き中)
     inputActionMap["changeColor"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} }; // ペンの色を変更する
-    inputActionMap["changeWidth"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} };
+    inputActionMap["changeWidth"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} }; // ペンの太さを変更する
     inputActionMap["eraser"] = { {InputType::keyboard, KEY_INPUT_E}, { InputType::mouse, MOUSE_INPUT_RIGHT } }; // 消しゴム
     
     inputActionMap["ok"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} }; // タイトル画面などでボタンを押すときなどに使用
     
     // 開発時のみの可能性あり
-    inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_P} }; // 次のシーンに遷移する
-    inputActionMap["exit"] = { {InputType::keyboard, KEY_INPUT_ESCAPE} }; // プログラムを終了する
-    inputActionMap["makeImage"] = { {InputType::keyboard, KEY_INPUT_I} }; // 画像を作成する
+    inputActionMap["nextScene"] = { {InputType::keyboard, KEY_INPUT_P} };   // 次のシーンに遷移する
+    inputActionMap["exit"] = { {InputType::keyboard, KEY_INPUT_ESCAPE} };   // プログラムを終了する
+    inputActionMap["makeImage"] = { {InputType::keyboard, KEY_INPUT_I} };   // 画像を作成する
     inputActionMap["endMatching"] = { {InputType::keyboard, KEY_INPUT_E} }; // 部屋立ち上げを終了する 
 }
 

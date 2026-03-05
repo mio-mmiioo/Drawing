@@ -75,10 +75,12 @@ void Client::ReceiveData()
 	}
 	else
 	{
+		// 問題ないエラーの場合
 		if (WSAGetLastError() == 10035)
 		{
 			return;
 		}
+		// 問題あるエラーの場合はログを表示
 		int e = WSAGetLastError();
 		printfDx("%d\n", e);
 	}

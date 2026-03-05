@@ -2,8 +2,8 @@
 
 namespace Time
 {
-	void Init();
-	void Update();
-	void Release();
-	float DeltaTime();
+	void Init();		// ‰Šú‰»
+	void Update();		// XVˆ—
+	void Release();		// ‰ğ•úˆ—
+	float DeltaTime();	// ŠÔ‚Ìæ“¾
 }

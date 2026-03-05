@@ -8,6 +8,7 @@ namespace Packet
 
 void Packet::Init()
 {
+	// 受信したデータのcharをPACKET_DATA_TYPEに変えるときに使用
 	dataName["MAKE_ROOM"] = PACKET_DATA_TYPE::MAKE_ROOM;
 	dataName["ENTER_ROOM"] = PACKET_DATA_TYPE::ENTER_ROOM;
 	dataName["END_MAKE_ROOM"] = PACKET_DATA_TYPE::END_MAKE_ROOM;

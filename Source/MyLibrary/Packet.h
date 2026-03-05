@@ -24,9 +24,9 @@ enum PACKET_DATA_TYPE
 // 受信したいデータの中身
 struct PACKET
 {
-    char dataType[256];
-    char playerName[256];
-    int number;
+    char dataType[256];     // データの種類
+    char playerName[256];   // プレイヤーの名前(使用しないときは"")
+    int number;             // ポート番号や画像のハンドルなど
 };
 
 namespace Packet

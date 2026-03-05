@@ -9,8 +9,8 @@
 
 struct CLIENT_DATA
 {
-	PACKET client;				// クライアント自身のデータ
-	PACKET tmp;					// 送受信する際の一時的にデータを保存するための変数
+	PACKET client;	// クライアント自身のデータ
+	PACKET tmp;		// 送受信する際の一時的にデータを保存するための変数
 	PACKET recv;	// サーバーからのデータを受け取る際に使用
 };
 
@@ -27,7 +27,7 @@ public:
 
 	void SetClient(PACKET client) { data_.client = client; }	// クライアント自身に情報をセットする
 	PACKET GetData() { return data_.client; }					// クライアント自身の情報の取得
-	PACKET GetReciveData() { return data_.recv; }	// サーバーから受け取ったデータの取得
+	PACKET GetReciveData() { return data_.recv; }				// サーバーから受け取ったデータの取得
 
 	void SendData();	// データの送信
 	void ReceiveData();	// データの受信

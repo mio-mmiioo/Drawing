@@ -27,7 +27,7 @@ namespace Area
 {
 	bool CheckPointDistance(point p1, point p2, float distance); // true → distanceの範囲内にp1とp2が存在する
 	bool IsInArea(area a, point p); // true → 座標がボタンの範囲内にある
-	void IsClickArea(area a, point p, bool* isClickArea); // isCliclkAreaにフラグをセットする
+	void SetClickArea(area a, point p, bool* isClickArea); // isCliclkAreaにフラグをセットする
 	void DrawArea(area a, int buttonColor); // エリアを指定した色で描画する
 	void DrawButton1(button b, int color); // フラグがtrueの時、bAreaとcAreaのどちらも描画する
 	void DrawButton2(button b, int color); // フラグがtrueの時、cAreaのみ描画

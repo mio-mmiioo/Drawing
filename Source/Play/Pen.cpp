@@ -113,7 +113,7 @@ void Pen::SetColor(int* color)
 // 色を変える処理、中身はまだ
 void Pen::ChangeColor(int* color)
 {
-	Area::IsClickArea(changeColor.bArea, pMouse, &changeColor.isClickArea);
+	Area::SetClickArea(changeColor.bArea, pMouse, &changeColor.isClickArea);
 
 	if (changeColor.isClickArea == true)
 	{
@@ -157,7 +157,7 @@ void Pen::ChangeColor(int* color)
 
 void Pen::ChangeWidth(float* lineWidth)
 {
-	Area::IsClickArea(changeWidth.bArea, pMouse, &changeWidth.isClickArea);
+	Area::SetClickArea(changeWidth.bArea, pMouse, &changeWidth.isClickArea);
 	if (changeWidth.isClickArea == true && Area::IsInArea(changeWidthClick, pMouse))
 	{
 		// 線の太さ変更の処理
