@@ -1,5 +1,5 @@
 #include "MatchingScreen.h"
-#include "../Play/Area.h"
+#include "../MyLibrary/Area.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
 #include "../Data.h"

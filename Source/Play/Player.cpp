@@ -4,9 +4,9 @@
 #include "../MyLibrary/Time.h"
 #include "../MyLibrary/Input.h"
 #include "../MyLibrary/Color.h"
+#include "../MyLibrary/Area.h"
 #include "Theme.h"
 #include "Pen.h"
-#include "Area.h"
 #include "../Data.h"
 #include <vector>
 #include "../Scene.h"

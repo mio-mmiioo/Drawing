@@ -1,6 +1,6 @@
 #pragma once
 #include "DxLib.h"
-#include "../Play/Area.h"
+#include "Area.h"
 
 struct MY_HSV
 {

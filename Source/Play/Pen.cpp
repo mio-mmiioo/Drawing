@@ -12,9 +12,9 @@ namespace Pen
 {
 	void DrawPalette(int radius, point circleCenter); // パレットの描画 ※負荷がかかる処理なので、毎フレーム書かないこと
 
-	const point WIDTH_LINE_TOP = { 780, 320 }; // ペンの太さ変更線の上の座標
+	const point WIDTH_LINE_TOP = { 780, 320 };	// ペンの太さ変更線の上の座標
 	const point WIDTH_LINE_DOWN = { 780, 480 }; // ペンの太さ変更線の下の座標
-	const float WIDTH_LINE_WIDTH = 2.0f; // ペンの太さ変更線の太さ
+	const float WIDTH_LINE_WIDTH = 2.0f;		// ペンの太さ変更線の太さ
 
 	const float MIN_PEN_WIDTH = 10.0f; // ペンの太さの最小半径
 	const float MAX_PEN_WIDTH = 20.0f; // ペンの太さの最大半径
@@ -22,22 +22,22 @@ namespace Pen
 
 	
 	// 色変更関連
-	const int MAX_VALUE = 200; // 輝度
-	const float SELECT_COLOR_CIRCLE_R = 5.0f; // 選択されている色を示す円の半径
+	const int MAX_VALUE = 200;					// 輝度
+	const float SELECT_COLOR_CIRCLE_R = 5.0f;	// 選択されている色を示す円の半径
 	const float CURRENT_COLOR_CIRCLE_R = 10.0f; // 現在の色を示す円の半径
 
 	button changeColor; // 色を変更
 	button changeWidth; // 線の幅を変更
-	button eraser; // 消しゴム
+	button eraser;		// 消しゴム
 	
-	area canvas; // キャンバスの範囲
-	area value; // 輝度
-	area colorPalette; // カラーパレットの範囲
-	area changeColorImageArea; // 色変更の画像の範囲
-	area changeWidthClick; // 線の太さを変更できる範囲
+	area canvas;				// キャンバスの範囲
+	area value;					// 輝度
+	area colorPalette;			// カラーパレットの範囲
+	area changeColorImageArea;	// 色変更の画像の範囲
+	area changeWidthClick;		// 線の太さを変更できる範囲
 
-	point currentColorCircle; // 現在の色を示す円の位置
-	point pMouse; // playerのマウスの座標
+	point currentColorCircle;	// 現在の色を示す円の位置
+	point pMouse;				// playerのマウスの座標
 
 	MY_RGB penRGB; // ペンの色 RGB
 	MY_HSV penHSV; // ペンの色 HSV
@@ -114,10 +114,10 @@ void Pen::SetColor(int* color)
 void Pen::ChangeColor(int* color)
 {
 	Area::SetClickArea(changeColor.bArea, pMouse, &changeColor.isClickArea);
-
+	
+	// 色を変える処理
 	if (changeColor.isClickArea == true)
 	{
-		// ここで色を変える処理
 		int radius = (colorPalette.rightDown.x - colorPalette.leftTop.x) / 2;
 		point center = { colorPalette.leftTop.x + radius, colorPalette.leftTop.y + radius };
 

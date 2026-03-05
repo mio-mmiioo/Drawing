@@ -72,9 +72,6 @@
     <ClCompile Include="Source\Title\TitleScreen.cpp">
       <Filter>Title</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Play\Area.cpp">
-      <Filter>Play</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Play\Theme.cpp">
       <Filter>Play</Filter>
     </ClCompile>
@@ -99,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="Source\Matching\MatchingScreen.cpp">
       <Filter>Matching</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Area.cpp">
+      <Filter>MyLibrary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,9 +162,6 @@
     <ClInclude Include="Source\Title\TitleScreen.h">
       <Filter>Title</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Play\Area.h">
-      <Filter>Play</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Play\Theme.h">
       <Filter>Play</Filter>
     </ClInclude>
@@ -186,6 +183,9 @@
     </ClInclude>
     <ClInclude Include="Source\Matching\MatchingScreen.h">
       <Filter>Matching</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Area.h">
+      <Filter>MyLibrary</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

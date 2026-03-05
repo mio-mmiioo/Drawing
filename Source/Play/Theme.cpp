@@ -1,7 +1,7 @@
 #include "Theme.h"
 #include "DxLib.h"
 #include <string>
-#include "Area.h"
+#include "../MyLibrary/Area.h"
 #include "../Image.h"
 
 namespace Theme

@@ -94,7 +94,7 @@ void Data::ReadData()
 
 		if (csv->GetString(line, AREA_DATA::COLOR) == "TRUE")
 		{
-
+			// F‚ÌÝ’è‚Í‚Ü‚¾
 		}
 
 		if (csv->GetString(line, AREA_DATA::IMAGE) == "TRUE")

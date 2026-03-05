@@ -1,7 +1,7 @@
 #include "Color.h"
 #include <algorithm>
 #include <math.h>
-#include "../Play/Area.h"
+//#include "Area.h"
 
 MY_RGB Color::HSVtoRGB(float h, float s, float v) {
 	float r = 0.0f;
